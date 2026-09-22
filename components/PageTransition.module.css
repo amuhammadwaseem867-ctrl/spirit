@@ -1,0 +1,29 @@
+.page {
+  position: relative;
+  width: 100%;
+  min-height: 100%;
+  isolation: isolate;
+}
+
+.wipe {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background: #101317;
+  transform-origin: top;
+}
+
+/* =========================================
+   REDUCED MOTION
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .page {
+    opacity: 1 !important;
+  }
+
+  .wipe {
+    display: none;
+  }
+}

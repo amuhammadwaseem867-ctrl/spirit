@@ -1,0 +1,552 @@
+.header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 1000;
+  width: 100%;
+
+  color: #f5f5f2;
+
+  transition:
+    background-color 420ms cubic-bezier(0.16, 1, 0.3, 1),
+    color 420ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 420ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 420ms ease;
+}
+
+.header.scrolled,
+.header.menuActive {
+  color: #101317;
+  background: rgba(245, 245, 242, 0.94);
+  border-bottom: 1px solid rgba(16, 19, 23, 0.08);
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.header.scrolled {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.035);
+}
+
+/* =========================
+   NAV INNER
+========================= */
+
+.navInner {
+  width: min(100% - 64px, 1800px);
+  height: 82px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+}
+
+/*
+ * Holds the mobile menu trigger and the wordmark.
+ * On desktop only the wordmark is visible, so the two sit
+ * together as a simple row on the left of the header.
+ */
+.left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  min-width: 0;
+}
+
+/* =========================
+   LOGO
+========================= */
+
+.logo {
+  width: fit-content;
+
+  color: inherit;
+  text-decoration: none;
+
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  line-height: 1;
+
+  transition: opacity 220ms ease;
+}
+
+.logo:hover {
+  opacity: 0.58;
+}
+
+/* =========================
+   DESKTOP NAV
+========================= */
+
+.desktopNav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 34px;
+}
+
+.navItem {
+  height: 82px;
+
+  display: flex;
+  align-items: center;
+}
+
+.navLink {
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 8px 0;
+
+  border: 0;
+  background: transparent;
+
+  color: inherit;
+
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  text-transform: uppercase;
+
+  cursor: pointer;
+}
+
+.navLink::after {
+  content: "";
+
+  position: absolute;
+  left: 0;
+  bottom: 1px;
+
+  width: 0;
+  height: 1px;
+
+  background: currentColor;
+
+  transition: width 280ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.navLink:hover::after,
+.navLink.navLinkActive::after {
+  width: calc(100% - 10px);
+}
+
+/*
+ * Marks the destinations that open a mega menu.
+ * The underline stops short of it.
+ */
+.navDot {
+  width: 4px;
+  height: 4px;
+
+  flex: 0 0 auto;
+
+  border-radius: 50%;
+
+  background: currentColor;
+
+  opacity: 0.4;
+
+  transition: opacity 220ms ease;
+}
+
+.navLink:hover .navDot,
+.navLink.navLinkActive .navDot {
+  opacity: 1;
+}
+
+/* =========================
+   ACTIONS
+========================= */
+
+.actions {
+  justify-self: end;
+
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.actionButton {
+  position: relative;
+
+  width: 40px;
+  height: 40px;
+
+  display: grid;
+  place-items: center;
+
+  padding: 0;
+
+  border: 0;
+  background: transparent;
+
+  color: inherit;
+
+  cursor: pointer;
+}
+
+.actionButton::before {
+  content: "";
+
+  position: absolute;
+  inset: 3px;
+
+  border-radius: 50%;
+
+  background: currentColor;
+
+  opacity: 0;
+  transform: scale(0.72);
+
+  transition:
+    opacity 220ms ease,
+    transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.actionButton:hover::before,
+.actionButton:focus-visible::before {
+  opacity: 0.07;
+  transform: scale(1);
+}
+
+.actionButton svg {
+  position: relative;
+  z-index: 1;
+}
+
+.bagCount {
+  position: absolute;
+  top: 3px;
+  right: 1px;
+
+  min-width: 15px;
+  height: 15px;
+
+  display: grid;
+  place-items: center;
+
+  padding: 0 3px;
+
+  border-radius: 50%;
+
+  background: #101317;
+  color: #f5f5f2;
+
+  font-size: 7px;
+  font-weight: 600;
+  line-height: 1;
+
+  z-index: 2;
+}
+
+/*
+ * On a transparent header the badge inverts so it stays
+ * legible over the campaign imagery.
+ */
+.header:not(.scrolled):not(.menuActive) .bagCount {
+  background: #f5f5f2;
+  color: #101317;
+}
+
+/* =========================
+   MOBILE BUTTON
+========================= */
+
+.mobileMenuButton {
+  display: none;
+
+  width: 40px;
+  height: 40px;
+
+  padding: 0;
+
+  border: 0;
+  background: transparent;
+
+  color: inherit;
+
+  cursor: pointer;
+}
+
+/* =========================
+   MOBILE MENU
+========================= */
+
+.mobileMenu {
+  position: fixed;
+  inset: 0;
+
+  z-index: 990;
+
+  background: #f5f5f2;
+  color: #101317;
+
+  overflow-y: auto;
+
+  /*
+   * Kept mounted so opening is instant, but fully inert
+   * while closed so it never covers the page.
+   */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition:
+    opacity 260ms ease,
+    visibility 260ms ease;
+}
+
+.mobileMenuOpen {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/*
+ * The panel is a mobile-only surface. This guards against it
+ * staying open if the viewport grows while it is visible.
+ */
+@media (min-width: 851px) {
+  .mobileMenu {
+    display: none;
+  }
+}
+
+.mobileMenuInner {
+  min-height: 100%;
+
+  padding: 106px 28px 28px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.mobileMenuMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding-bottom: 18px;
+
+  border-bottom: 1px solid rgba(16, 19, 23, 0.12);
+
+  color: rgba(16, 19, 23, 0.45);
+
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+}
+
+.mobileNav {
+  display: flex;
+  flex-direction: column;
+
+  margin-top: 20px;
+}
+
+.mobileNavLink {
+  display: grid;
+  grid-template-columns: 30px 1fr auto;
+  align-items: center;
+  gap: 12px;
+
+  padding: 21px 0;
+
+  border-bottom: 1px solid rgba(16, 19, 23, 0.1);
+
+  color: #101317;
+  text-decoration: none;
+}
+
+.mobileNavNumber {
+  color: rgba(16, 19, 23, 0.35);
+
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.mobileNavLabel {
+  font-size: clamp(31px, 9vw, 54px);
+  font-weight: 400;
+  letter-spacing: -0.05em;
+  line-height: 0.95;
+}
+
+.mobileMenuBottom {
+  display: flex;
+  flex-direction: column;
+
+  margin-top: auto;
+  padding-top: 70px;
+}
+
+.mobileUtility {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  min-height: 46px;
+
+  padding: 0;
+
+  border: 0;
+  border-bottom: 1px solid rgba(16, 19, 23, 0.09);
+
+  background: transparent;
+
+  color: #101317;
+
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition: opacity 220ms ease;
+}
+
+/*
+ * Mirrors the meta row at the top of the panel so the menu is
+ * bookended by the same metadata treatment.
+ */
+.mobileMenuFooter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+
+  margin-top: 30px;
+  padding-top: 22px;
+
+  border-top: 1px solid rgba(16, 19, 23, 0.12);
+
+  color: rgba(16, 19, 23, 0.45);
+
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.mobileUtility:hover {
+  opacity: 0.55;
+}
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 1100px) {
+  .navInner {
+    width: min(100% - 48px, 1800px);
+  }
+
+  .desktopNav {
+    gap: 22px;
+  }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 850px) {
+  .navInner {
+    width: min(100% - 40px, 1800px);
+    height: 68px;
+
+    grid-template-columns: 1fr auto;
+  }
+
+  .left {
+    gap: 14px;
+  }
+
+  .mobileMenuButton {
+    display: grid;
+    place-items: center;
+  }
+
+  .desktopNav {
+    display: none;
+  }
+
+  .logo {
+    font-size: 18px;
+  }
+
+  .actions {
+    gap: 0;
+  }
+
+  .accountButton {
+    display: none;
+  }
+}
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 520px) {
+  .navInner {
+    width: calc(100% - 28px);
+  }
+
+  .actionButton,
+  .mobileMenuButton {
+    width: 35px;
+    height: 35px;
+  }
+
+  .mobileMenuInner {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  .mobileNavLabel {
+    font-size: 30px;
+  }
+}
+
+/* =========================
+   FOCUS
+========================= */
+
+.navLink:focus-visible,
+.actionButton:focus-visible,
+.mobileMenuButton:focus-visible,
+.mobileNavLink:focus-visible,
+.mobileUtility:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: 4px;
+}
+
+/* =========================
+   REDUCED MOTION
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .header,
+  .logo,
+  .navLink::after,
+  .navDot,
+  .actionButton::before,
+  .mobileMenu,
+  .mobileUtility {
+    transition: none;
+  }
+}
