@@ -81,7 +81,7 @@
 }
 
 .title {
-  font-size: clamp(40px, min(11vw, calc(100vw / var(--chars, 8))), 220px);
+  font-size: clamp(40px, min(11vw, calc(124vw / var(--chars, 8))), 220px);
   text-shadow: 0 0.04em 0.5em rgba(0, 0, 0, 0.3);
 }
 

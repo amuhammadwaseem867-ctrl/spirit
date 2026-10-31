@@ -42,7 +42,7 @@
 
 .brand span:first-child {
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: 0.2em;
 }
 
@@ -154,7 +154,7 @@
   margin-bottom: 27px;
   color: rgba(10, 10, 11, 0.4);
   font-size: 9px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.15em;
 }
 
@@ -228,7 +228,7 @@
 
 .optionLabel {
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.13em;
 }
 
@@ -361,7 +361,7 @@
 
 .resultCategory strong {
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.13em;
 }
 
@@ -387,7 +387,7 @@
   background: #0a0a0b;
   color: #ecebe6;
   font-size: 9px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.14em;
   transition:
     transform 180ms ease,
@@ -405,7 +405,7 @@
   color: #0a0a0b;
   font: inherit;
   font-size: 8px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.14em;
 }
 

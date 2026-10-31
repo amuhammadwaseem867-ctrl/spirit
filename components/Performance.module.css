@@ -84,8 +84,7 @@
 .modeTitle {
   font-family: var(--font-display);
   font-size: clamp(20px, 1.9vw, 32px);
-  font-weight: 800;
-  font-stretch: 112%;
+  font-weight: 500;
   letter-spacing: -0.03em;
 }
 
@@ -98,8 +97,7 @@
 .modeMetric strong {
   font-family: var(--font-display);
   font-size: clamp(20px, 1.7vw, 30px);
-  font-weight: 700;
-  font-stretch: 75%;
+  font-weight: 500;
 }
 
 .modeMetric small {
@@ -158,8 +156,7 @@
 .readouts strong {
   font-family: var(--font-display);
   font-size: clamp(24px, 2.2vw, 40px);
-  font-weight: 700;
-  font-stretch: 75%;
+  font-weight: 500;
   font-variant-numeric: tabular-nums;
   line-height: 1;
 }

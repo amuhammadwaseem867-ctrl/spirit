@@ -82,7 +82,6 @@
 
 .title {
   font-size: clamp(54px, 8.4vw, 168px);
-  font-stretch: 112%;
   line-height: 0.84;
   letter-spacing: -0.04em;
   color: var(--bone);

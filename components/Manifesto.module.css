@@ -21,7 +21,6 @@
   font-family: var(--font-display);
   font-size: clamp(30px, 3.9vw, 72px);
   font-weight: 500;
-  font-stretch: 100%;
   line-height: 1.04;
   letter-spacing: -0.035em;
   color: var(--bone);

@@ -41,7 +41,6 @@
 .heading {
   max-width: 11ch;
   font-size: clamp(30px, 3.4vw, 58px);
-  font-stretch: 100%;
   line-height: 0.95;
   letter-spacing: -0.035em;
 }
@@ -63,12 +62,11 @@
 
 .count strong {
   color: var(--ink);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .title {
-  font-size: clamp(54px, 5.6vw, 108px);
-  font-stretch: 72%;
+  font-size: clamp(46px, 4.6vw, 96px);
   line-height: 0.82;
 }
 

@@ -47,7 +47,7 @@
 
 @media (max-width: 760px) {
   .kinetic {
-    font-size: min(16vw, calc(98vw / var(--chars, 8))) !important;
+    font-size: min(16vw, calc(124vw / var(--chars, 8))) !important;
   }
 }
 

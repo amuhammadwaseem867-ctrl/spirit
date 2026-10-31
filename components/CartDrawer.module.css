@@ -48,7 +48,7 @@
   gap: 20px;
   color: rgba(10, 10, 11, 0.46);
   font-size: 9px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.16em;
   line-height: 1.3;
   text-transform: uppercase;
@@ -141,7 +141,7 @@
   background: #deded9;
   color: rgba(10, 10, 11, 0.35);
   font-size: 9px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.18em;
 }
 
@@ -151,7 +151,7 @@
   left: 10px;
   color: #ecebe6;
   font-size: 9px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.1em;
   text-shadow: 0 1px 10px
     rgba(0, 0, 0, 0.25);
@@ -175,7 +175,7 @@
   margin-bottom: 9px;
   color: rgba(10, 10, 11, 0.46);
   font-size: 8px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.15em;
   line-height: 1.2;
   text-transform: uppercase;
@@ -200,7 +200,7 @@
   color: rgba(10, 10, 11, 0.5);
   font: inherit;
   font-size: 8px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.13em;
   cursor: pointer;
   text-transform: uppercase;
@@ -221,14 +221,14 @@
   margin-top: 23px;
   color: rgba(10, 10, 11, 0.44);
   font-size: 8px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.13em;
 }
 
 .size strong {
   color: #0a0a0b;
   font-size: 9px;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .itemBottom {
@@ -287,7 +287,7 @@
 .price span {
   color: rgba(10, 10, 11, 0.45);
   font-size: 8px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.1em;
 }
 
@@ -309,7 +309,7 @@
 .emptyNumber {
   color: rgba(10, 10, 11, 0.28);
   font-size: 10px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.12em;
 }
 
@@ -345,7 +345,7 @@
     rgba(10, 10, 11, 0.5);
   color: #0a0a0b;
   font-size: 9px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.14em;
   text-decoration: none;
   transition:
@@ -377,7 +377,7 @@
 .subtotal span {
   color: rgba(10, 10, 11, 0.52);
   font-size: 9px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.14em;
 }
 
@@ -391,7 +391,7 @@
   margin-top: 18px;
   color: rgba(10, 10, 11, 0.46);
   font-size: 8px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.12em;
   text-align: right;
 }
@@ -410,7 +410,7 @@
   color: #ecebe6;
   font: inherit;
   font-size: 9px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.15em;
   cursor: not-allowed;
   opacity: 0.72;
@@ -426,7 +426,7 @@
   color: rgba(10, 10, 11, 0.55);
   font: inherit;
   font-size: 8px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.15em;
   line-height: 1.4;
   cursor: pointer;

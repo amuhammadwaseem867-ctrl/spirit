@@ -1,4 +1,5 @@
-import { Archivo, Geist, Geist_Mono } from "next/font/google";
+import { Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import { MotionConfig } from "framer-motion";
 import "./globals.css";
 
@@ -12,21 +13,14 @@ import Preloader from "@/components/system/Preloader";
 import GLRoot from "@/components/three/GLRoot";
 
 /*
- * Archivo carries the display type. Its width axis lets the same
- * family run expanded for headlines and condensed for kinetic
- * accents. Geist sets body copy; Geist Mono sets the technical
- * labels.
+ * Satoshi (Indian Type Foundry, via Fontshare, ITF Free Font
+ * License) sets headlines and body copy from one self-hosted
+ * variable file. Geist Mono sets the small technical labels.
  */
-const archivo = Archivo({
-  variable: "--font-archivo",
-  subsets: ["latin"],
-  axes: ["wdth"],
-  display: "swap",
-});
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const satoshi = localFont({
+  src: "./fonts/Satoshi-Variable.woff2",
+  variable: "--font-satoshi",
+  weight: "300 900",
   display: "swap",
 });
 
@@ -75,7 +69,7 @@ export default function RootLayout({ children }) {
       lang="en"
       data-intro="play"
       suppressHydrationWarning
-      className={`${archivo.variable} ${geistSans.variable} ${geistMono.variable}`}
+      className={`${satoshi.variable} ${geistMono.variable}`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: INTRO_SCRIPT }} />

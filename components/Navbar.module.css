@@ -315,7 +315,6 @@
 
 .mobileLabel {
   font-size: clamp(28px, 8.4vw, 60px);
-  font-stretch: 100%;
   line-height: 0.95;
   overflow-wrap: anywhere;
 }
