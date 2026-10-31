@@ -1,0 +1,39 @@
+.band {
+  padding-top: clamp(80px, 9vw, 150px);
+  overflow: hidden;
+}
+
+.body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 32px;
+  padding-block: clamp(40px, 6vw, 100px);
+}
+
+.title {
+  font-size: clamp(52px, 9.4vw, 180px);
+}
+
+.side {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line-dark);
+}
+
+.side p {
+  max-width: 40ch;
+  font-size: clamp(16px, 1.3vw, 20px);
+  line-height: 1.5;
+  color: var(--fg-dark-muted);
+}
+
+.marquee {
+  padding-block: 20px;
+  border-top: 1px solid var(--line-dark);
+  font-size: clamp(44px, 7vw, 120px);
+  color: var(--bone);
+}

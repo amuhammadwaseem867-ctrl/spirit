@@ -1,329 +1,149 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 
-import StrokeText from "@/components/StrokeText";
+import KineticText from "@/components/ui/KineticText";
+import Reveal from "@/components/ui/Reveal";
+import { addTick, TICK } from "@/lib/ticker";
+import { pointer } from "@/lib/pointer";
+
 import styles from "./Journal.module.css";
 
-const journalStories = [
+const entries = [
   {
     number: "01",
-    category: "MOVEMENT",
-    date: "SPIRIT / 2026",
-    title: "WHY WE MOVE",
-    excerpt:
-      "Movement shapes more than performance. It shapes the way we think, work, train and live.",
+    category: "Movement",
+    title: "Why we move",
+    excerpt: "Movement shapes more than performance. It shapes the way we think, work, train and live.",
     image: "/images/campaigns/coreperformance.jpeg",
-    href: "/story/why-we-move",
   },
   {
     number: "02",
-    category: "DESIGN",
-    date: "SPIRIT / 2026",
-    title: "FORM FOLLOWS MOTION",
-    excerpt:
-      "A closer look at the relationship between form, function and the moving body.",
+    category: "Design",
+    title: "Form follows motion",
+    excerpt: "A closer look at the relationship between form, function and the moving body.",
     image: "/images/campaigns/aeroflextee.jpeg",
-    href: "/story/form-follows-motion",
   },
   {
     number: "03",
-    category: "CULTURE",
-    date: "SPIRIT / 2026",
-    title: "THE ACTIVE LIFE",
-    excerpt:
-      "Performance does not end when training does. It continues into everything around it.",
+    category: "Culture",
+    title: "The active life",
+    excerpt: "Performance does not end when training does. It continues into everything around it.",
     image: "/images/campaigns/legging.jpeg",
-    href: "/story/the-active-life",
   },
 ];
 
+/**
+ * Index-style list. On desktop a floating preview follows the
+ * pointer and leans with its velocity; on touch devices each row
+ * shows its own thumbnail instead.
+ */
 export default function Journal() {
+  const previewRef = useRef(null);
+  const [hovered, setHovered] = useState(-1);
+
+  useEffect(() => {
+    const preview = previewRef.current;
+    if (!preview) return undefined;
+
+    const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (!fine) return undefined;
+
+    const pos = { x: pointer.x, y: pointer.y, lean: 0 };
+
+    return addTick(() => {
+      const dx = pointer.x - pos.x;
+      const ease = reduce ? 1 : 0.12;
+
+      pos.x += dx * ease;
+      pos.y += (pointer.y - pos.y) * ease;
+      pos.lean += (Math.max(-14, Math.min(14, dx * 0.12)) - pos.lean) * 0.12;
+
+      preview.style.transform = `translate3d(${pos.x}px, ${pos.y}px, 0) translate(-50%, -50%) rotate(${reduce ? 0 : pos.lean}deg)`;
+    }, TICK.CURSOR);
+  }, []);
+
   return (
-    <section className={styles.journal} id="journal">
-      <div className={styles.inner}>
+    <section id="journal" className={`${styles.journal} surface-bone`}>
+      <div className="wrap">
+        <div className="meta">
+          <span>09</span>
+          <span>JOURNAL / STORIES</span>
+          <span>THE SPIRIT JOURNAL</span>
+        </div>
 
-        {/* HEADER */}
-
-        <motion.header
-          className={styles.header}
-          initial={{
-            opacity: 0,
-            y: 35,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          viewport={{
-            once: true,
-            amount: 0.25,
-          }}
-          transition={{
-            duration: 0.85,
-            ease: [0.16, 1, 0.3, 1],
-          }}
-        >
-          <div className={styles.meta}>
-            <span>07</span>
-
-            <span>
-              JOURNAL / STORIES
-            </span>
-
-            <span>
-              SPIRIT / 2026
-            </span>
-          </div>
-
-          <div className={styles.headerGrid}>
-            <div className={styles.headerLabel}>
-              <span className={styles.labelLine} />
-
-              <span>
-                THE SPIRIT JOURNAL
-              </span>
-            </div>
-
-            <div className={styles.headerMain}>
-              <h2>
-                <span className={styles.solidTitle}>
-                  IDEAS IN
-                </span>
-
-                <br />
-
-                <StrokeText
-                  color="#f5f5f2"
-                  strokeColor="rgba(245, 245, 242, 0.9)"
-                  strokeWidth={1}
-                  className={styles.journalStroke}
-                >
-                  MOTION.
-                </StrokeText>
-              </h2>
-
-              <p>
-                A collection of stories exploring
-                movement, design, performance
-                and the culture surrounding an
-                active life.
-              </p>
-            </div>
-          </div>
-        </motion.header>
-
-        {/* FEATURED JOURNAL */}
-
-        <motion.article
-          className={styles.featured}
-          initial={{
-            opacity: 0,
-            y: 45,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          viewport={{
-            once: true,
-            amount: 0.2,
-          }}
-          transition={{
-            duration: 0.9,
-            ease: [0.16, 1, 0.3, 1],
-          }}
-        >
-          <Link
-            href={journalStories[0].href}
-            className={styles.featuredLink}
-          >
-            <div className={styles.featuredImage}>
-              <Image
-                src={journalStories[0].image}
-                alt={journalStories[0].title}
-                fill
-                sizes="(max-width: 900px) 92vw, 60vw"
-              />
-
-              <div className={styles.featuredOverlay} />
-
-              <div className={styles.featuredTop}>
-                <span>
-                  {journalStories[0].category}
-                </span>
-
-                <span>
-                  {journalStories[0].number}
-                </span>
-              </div>
-
-              <div className={styles.featuredBottom}>
-                <div>
-                  <span
-                    className={styles.featuredEyebrow}
-                  >
-                    FEATURED JOURNAL
-                  </span>
-
-                  <h3>
-                    {journalStories[0].title}
-                  </h3>
-                </div>
-
-                <span className={styles.featuredArrow}>
-                  <ArrowUpRight
-                    size={22}
-                    strokeWidth={1.1}
-                  />
-                </span>
-              </div>
-            </div>
-          </Link>
-        </motion.article>
-
-        {/* FEATURED COPY */}
-
-        <div className={styles.featuredCopy}>
-          <span>
-            {journalStories[0].date}
-          </span>
-
+        <div className={styles.header}>
+          <KineticText
+            as="h2"
+            lines={["IDEAS IN", "MOTION."]}
+            outline={[1]}
+            className={`display ${styles.heading}`}
+          />
           <p>
-            {journalStories[0].excerpt}
+            A collection of stories exploring movement, design, performance
+            and the culture surrounding an active life.
           </p>
-
-          <Link href={journalStories[0].href}>
-            READ STORY
-
-            <ArrowUpRight
-              size={14}
-              strokeWidth={1.1}
-            />
-          </Link>
         </div>
 
-        {/* JOURNAL LIST */}
+        <Reveal as="ol" className={styles.list} threshold={0.1} onPointerLeave={() => setHovered(-1)}>
+          {entries.map((entry, index) => (
+            <li
+              key={entry.number}
+              className={`reveal ${styles.row}`}
+              style={{ "--rd": `${index * 90}ms` }}
+              data-dim={hovered !== -1 && hovered !== index ? "true" : "false"}
+              onPointerEnter={() => setHovered(index)}
+            >
+              <Link href="/story" className={styles.rowLink}>
+                <span className={styles.number}>{entry.number}</span>
 
-        <div className={styles.list}>
-          {journalStories.slice(1).map(
-            (story, index) => (
-              <motion.article
-                key={story.number}
-                className={styles.story}
-                initial={{
-                  opacity: 0,
-                  y: 35,
-                }}
-                whileInView={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                viewport={{
-                  once: true,
-                  amount: 0.2,
-                }}
-                transition={{
-                  duration: 0.75,
-                  delay: index * 0.1,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-              >
-                <Link
-                  href={story.href}
-                  className={styles.storyLink}
-                >
-                  <div className={styles.storyNumber}>
-                    {story.number}
-                  </div>
+                <span className={styles.thumb}>
+                  <Image src={entry.image} alt="" fill sizes="120px" />
+                </span>
 
-                  <div className={styles.storyImage}>
-                    <Image
-                      src={story.image}
-                      alt={story.title}
-                      fill
-                      sizes="(max-width: 900px) 92vw, 30vw"
-                    />
+                <span className={styles.title}>
+                  <span className="display">{entry.title}</span>
+                </span>
 
-                    <div
-                      className={
-                        styles.storyImageOverlay
-                      }
-                    />
-                  </div>
+                <span className={styles.excerpt}>{entry.excerpt}</span>
 
-                  <div className={styles.storyContent}>
-                    <div className={styles.storyMeta}>
-                      <span>
-                        {story.category}
-                      </span>
+                <span className={styles.category}>
+                  {entry.category}
+                  <ArrowUpRight size={16} strokeWidth={1.5} />
+                </span>
+              </Link>
+            </li>
+          ))}
+        </Reveal>
 
-                      <span>
-                        {story.date}
-                      </span>
-                    </div>
-
-                    <h3>
-                      {story.title}
-                    </h3>
-
-                    <p>
-                      {story.excerpt}
-                    </p>
-
-                    <span className={styles.storyRead}>
-                      READ STORY
-
-                      <ArrowUpRight
-                        size={14}
-                        strokeWidth={1.1}
-                      />
-                    </span>
-                  </div>
-                </Link>
-              </motion.article>
-            )
-          )}
-        </div>
-
-        {/* FOOTER */}
-
-        <motion.div
-          className={styles.footer}
-          initial={{
-            opacity: 0,
-          }}
-          whileInView={{
-            opacity: 1,
-          }}
-          viewport={{
-            once: true,
-          }}
-          transition={{
-            duration: 0.8,
-          }}
-        >
-          <span>
-            SPIRIT / JOURNAL INDEX
-          </span>
-
-          <span>
-            MOVEMENT / DESIGN / CULTURE
-          </span>
-
-          <Link href="/story">
-            VIEW ALL
-
-            <ArrowUpRight
-              size={14}
-              strokeWidth={1.1}
-            />
+        <div className={styles.footer}>
+          <span className="mono">Movement / design / culture</span>
+          <Link href="/story" className="link-line">
+            Read the journal <ArrowUpRight size={14} strokeWidth={1.5} />
           </Link>
-        </motion.div>
+        </div>
+      </div>
 
+      <div
+        ref={previewRef}
+        className={styles.preview}
+        data-visible={hovered !== -1 ? "true" : "false"}
+        aria-hidden="true"
+      >
+        {entries.map((entry, index) => (
+          <span
+            key={entry.number}
+            className={styles.previewFrame}
+            data-active={hovered === index ? "true" : "false"}
+          >
+            <Image src={entry.image} alt="" fill sizes="320px" />
+          </span>
+        ))}
       </div>
     </section>
   );

@@ -1,350 +1,324 @@
 "use client";
 
+import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import dynamic from "next/dynamic";
+import {
+  motion,
+  useMotionValueEvent,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 import {
   ArrowDown,
   ArrowLeft,
   ArrowRight,
   ArrowUpRight,
+  Pause,
+  Play,
 } from "lucide-react";
+
+import GLView from "@/components/three/GLView";
+import KineticText from "@/components/ui/KineticText";
+import { heroFrames } from "@/lib/media";
+import { sceneState } from "@/lib/gl";
+import { onIntroDone } from "@/lib/intro";
+import useReducedMotionSafe from "@/lib/useReducedMotionSafe";
 
 import styles from "./Hero.module.css";
 
-const heroSlides = [
-  {
-    id: "01",
-    image: "/images/hero/hero1.jpg",
-    eyebrow: "SPIRIT / PERFORMANCE",
-    title: "MOVE DIFFERENT.",
-    description:
-      "Performance-driven essentials designed for movement and beyond.",
-  },
-  {
-    id: "02",
-    image: "/images/hero/hero2.jpg",
-    eyebrow: "SPIRIT / MOVEMENT",
-    title: "BUILT TO MOVE.",
-    description:
-      "Engineered silhouettes made to move with your body.",
-  },
-  {
-    id: "03",
-    image: "/images/hero/hero3.jpg",
-    eyebrow: "SPIRIT / FORM",
-    title: "FORM IN MOTION.",
-    description:
-      "Refined performance pieces where form meets function.",
-  },
-  {
-    id: "04",
-    image: "/images/hero/hero4.jpg",
-    eyebrow: "SPIRIT / ENERGY",
-    title: "KEEP MOVING.",
-    description:
-      "Made for intensity, recovery and everything between.",
-  },
-];
+const HeroScene = dynamic(() => import("@/components/three/HeroScene"), {
+  ssr: false,
+});
 
-const AUTOPLAY_DELAY = 5500;
-
-function getSlideAlt(slide) {
-  return `SPIRIT campaign — ${slide.eyebrow.replace(
-    "SPIRIT / ",
-    ""
-  )}`;
-}
+const AUTOPLAY = 6500;
 
 export default function Hero() {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const sectionRef = useRef(null);
+  const stageRef = useRef(null);
+  const reduce = useReducedMotionSafe();
 
-  const activeSlide = heroSlides[activeIndex];
+  const [index, setIndex] = useState(0);
+  const [playing, setPlaying] = useState(true);
+  const [intro, setIntro] = useState(false);
+  const [inView, setInView] = useState(true);
+  const [scrolled, setScrolled] = useState(false);
 
-  const nextSlide = useCallback(() => {
-    setActiveIndex(
-      (current) => (current + 1) % heroSlides.length
-    );
-  }, []);
+  const frame = heroFrames[index];
+  const total = heroFrames.length;
 
-  const previousSlide = useCallback(() => {
-    setActiveIndex(
-      (current) =>
-        (current - 1 + heroSlides.length) %
-        heroSlides.length
-    );
-  }, []);
-
-  const goToSlide = useCallback((index) => {
-    setActiveIndex(index);
-  }, []);
-
-  /*
-   * Automatic transition
-   * Runs continuously and does not pause on hover.
-   */
+  /* ---------- intro (waits for the preloader) ---------- */
   useEffect(() => {
-    const timer = window.setInterval(() => {
-      setActiveIndex(
-        (current) => (current + 1) % heroSlides.length
-      );
-    }, AUTOPLAY_DELAY);
+    return onIntroDone(() => {
+      sceneState.hero.intro = 1;
+      setIntro(true);
+    });
+  }, []);
+
+  /* ---------- share the stage with the 3D scene ---------- */
+  useEffect(() => {
+    sceneState.hero.el = stageRef.current;
+    sceneState.hero.index = 0;
 
     return () => {
-      window.clearInterval(timer);
+      sceneState.hero.el = null;
+      sceneState.hero.intro = 0;
+      sceneState.hero.scroll = 0;
     };
   }, []);
 
-  /*
-   * Keyboard controls
-   */
   useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (event.key === "ArrowRight") {
-        nextSlide();
-      }
+    sceneState.hero.index = index;
+  }, [index]);
 
-      if (event.key === "ArrowLeft") {
-        previousSlide();
-      }
-    };
+  /* ---------- visibility: pause work when offscreen ---------- */
+  useEffect(() => {
+    const node = sectionRef.current;
+    if (!node) return undefined;
 
-    window.addEventListener("keydown", handleKeyDown);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        sceneState.hero.visible = entry.isIntersecting;
+        setInView(entry.isIntersecting);
+      },
+      { threshold: 0 }
+    );
+
+    observer.observe(node);
 
     return () => {
-      window.removeEventListener(
-        "keydown",
-        handleKeyDown
-      );
+      observer.disconnect();
+      sceneState.hero.visible = false;
     };
-  }, [nextSlide, previousSlide]);
+  }, []);
+
+  /* ---------- autoplay (never under reduced motion) ---------- */
+  const autoplay = playing && intro && inView && !scrolled && !reduce;
+
+  useEffect(() => {
+    if (!autoplay) return undefined;
+
+    const timer = window.setTimeout(() => {
+      setIndex((current) => (current + 1) % total);
+    }, AUTOPLAY);
+
+    return () => window.clearTimeout(timer);
+  }, [autoplay, index, total]);
+
+  const go = useCallback(
+    (next) => setIndex(((next % total) + total) % total),
+    [total]
+  );
+
+  const handleKeyDown = (event) => {
+    if (event.target.closest("input, textarea")) return;
+
+    if (event.key === "ArrowRight") go(index + 1);
+    if (event.key === "ArrowLeft") go(index - 1);
+  };
+
+  /* ---------- scroll choreography ---------- */
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end end"],
+  });
+
+  useMotionValueEvent(scrollYProgress, "change", (value) => {
+    sceneState.hero.scroll = value;
+
+    /* hold the current frame while the camera move plays */
+    const away = value > 0.06;
+    if (away !== scrolled) setScrolled(away);
+  });
+
+  const lineA = useTransform(scrollYProgress, [0, 0.7], ["0vw", "-22vw"]);
+  const lineB = useTransform(scrollYProgress, [0, 0.7], ["0vw", "22vw"]);
+  const fade = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
+  const titleFade = useTransform(scrollYProgress, [0.12, 0.5], [1, 0]);
+  const late = useTransform(scrollYProgress, [0.62, 0.92], [0, 1]);
+  const lateY = useTransform(scrollYProgress, [0.62, 0.98], ["8vh", "0vh"]);
 
   return (
     <section
-      className={styles.hero}
+      ref={sectionRef}
+      className={`${styles.hero} surface-clear`}
+      aria-roledescription="carousel"
       aria-label="SPIRIT campaign"
+      onKeyDown={handleKeyDown}
+      data-intro={intro ? "true" : "false"}
     >
-      {/* =========================
-          IMAGE STAGE
-      ========================= */}
+      <h1 className="sr-only">
+        SPIRIT — performance activewear designed for movement
+      </h1>
 
-      <div className={styles.imageStage}>
-        <AnimatePresence initial={false} mode="sync">
-          <motion.div
-            key={activeSlide.id}
-            className={styles.slide}
-            initial={{
-              opacity: 0,
-            }}
-            animate={{
-              opacity: 1,
-            }}
-            exit={{
-              opacity: 0,
-            }}
-            transition={{
-              duration: 0.9,
-              ease: "easeInOut",
-            }}
-          >
-            <motion.div
-              className={styles.imageMotion}
-              initial={{
-                scale: 1.025,
-              }}
-              animate={{
-                scale: 1,
-              }}
-              transition={{
-                duration: AUTOPLAY_DELAY / 1000,
-                ease: "linear",
-              }}
-            >
+      <div ref={stageRef} className={styles.stage}>
+        <GLView
+          className={styles.gl}
+          label={frame.media.alt}
+          scene={(onReady) => (
+            <HeroScene frames={heroFrames} onReady={onReady} />
+          )}
+          fallback={
+            <div className={styles.fallback}>
               <Image
-                src={activeSlide.image}
-                alt={getSlideAlt(activeSlide)}
+                src={frame.media.src}
+                alt=""
                 fill
-                priority={activeIndex === 0}
-                sizes="100vw"
-                quality={80}
-                className={styles.image}
+                loading="eager"
+                fetchPriority="high"
+                sizes="(max-width: 900px) 100vw, 40vw"
+                className={styles.fallbackImage}
+              />
+            </div>
+          }
+        />
+
+        {/* --------- copy --------- */}
+        <div className={`${styles.inner} wrap`}>
+          <motion.div className={styles.top} style={reduce ? undefined : { opacity: fade }}>
+            <span className={styles.topIndex}>
+              <span className="signal-dot" aria-hidden="true" />
+              <span>
+                {frame.id} — {String(total).padStart(2, "0")}
+              </span>
+            </span>
+            <span className={styles.topCenter}>SPIRIT / SS—2026</span>
+            <span className={styles.topRight}>{frame.eyebrow}</span>
+          </motion.div>
+
+          <div className={styles.headline} aria-hidden="true">
+            <motion.div style={reduce ? undefined : { x: lineA, opacity: titleFade }}>
+              <KineticText
+                key={`${frame.id}-a`}
+                as="p"
+                lines={[frame.lines[0]]}
+                trigger="mount"
+                play={intro}
+                fitChars={Math.max(...frame.lines.map((line) => line.length))}
+                className={`display ${styles.title}`}
+                delay={intro ? 120 : 0}
               />
             </motion.div>
+            <motion.div style={reduce ? undefined : { x: lineB, opacity: titleFade }}>
+              <KineticText
+                key={`${frame.id}-b`}
+                as="p"
+                lines={[frame.lines[1]]}
+                trigger="mount"
+                play={intro}
+                fitChars={Math.max(...frame.lines.map((line) => line.length))}
+                className={`display ${styles.title} ${styles.titleIndent}`}
+                delay={intro ? 260 : 0}
+              />
+            </motion.div>
+          </div>
 
-            <div className={styles.imageOverlay} />
-          </motion.div>
-        </AnimatePresence>
-      </div>
+          <motion.div className={styles.bottom} style={reduce ? undefined : { opacity: fade }}>
+            <div className={styles.copy}>
+              <p key={frame.id} className={styles.caption}>
+                {frame.caption}
+              </p>
 
-      {/* =========================
-          HERO CONTENT
-      ========================= */}
+              <div className={styles.actions}>
+                <Link
+                  href="/shop"
+                  className="btn btn-solid"
+                  data-magnetic="0.25"
+                >
+                  <span className="btn-label">Shop the system</span>
+                  <span className="btn-icon">
+                    <ArrowUpRight size={16} strokeWidth={1.5} />
+                  </span>
+                </Link>
 
-      <div className={styles.heroInner}>
-        {/* TOP META */}
+                <Link href="/collections" className="link-line">
+                  Collections
+                </Link>
+              </div>
+            </div>
 
-        <div className={styles.topMeta}>
-          <span>SPIRIT</span>
-
-          <span className={styles.topCenter}>
-            PERFORMANCE / 2026
-          </span>
-
-          <span>
-            {activeSlide.id} / 04
-          </span>
-        </div>
-
-        {/* MAIN CONTENT */}
-
-        <div className={styles.mainContent}>
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeSlide.id}
-              className={styles.copy}
-              initial={{
-                opacity: 0,
-                y: 24,
-              }}
-              animate={{
-                opacity: 1,
-                y: 0,
-              }}
-              exit={{
-                opacity: 0,
-                y: -14,
-              }}
-              transition={{
-                duration: 0.65,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-            >
-              <div className={styles.eyebrow}>
-                <span />
-                {activeSlide.eyebrow}
+            <div className={styles.controls}>
+              <div className={styles.progress} role="group" aria-label="Choose a campaign frame">
+                {heroFrames.map((item, i) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    className={styles.track}
+                    data-active={i === index ? "true" : "false"}
+                    data-done={i < index ? "true" : "false"}
+                    data-running={autoplay && i === index ? "true" : "false"}
+                    onClick={() => go(i)}
+                    aria-label={`Show frame ${i + 1}: ${item.lines.join(" ")}`}
+                    aria-current={i === index ? "true" : undefined}
+                    style={{ "--dur": `${AUTOPLAY}ms` }}
+                  >
+                    <span className={styles.trackLabel}>{item.id}</span>
+                    <span className={styles.trackBar}>
+                      <span className={styles.trackFill} />
+                    </span>
+                  </button>
+                ))}
               </div>
 
-              <h1>{activeSlide.title}</h1>
-
-              <p>{activeSlide.description}</p>
-
-              <Link
-                href="/shop"
-                className={styles.explore}
-              >
-                <span>EXPLORE COLLECTION</span>
-
-                <span className={styles.exploreIcon}>
-                  <ArrowUpRight
-                    size={15}
-                    strokeWidth={1.25}
-                  />
-                </span>
-              </Link>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        {/* =========================
-            BOTTOM BAR
-        ========================= */}
-
-        <div className={styles.bottomBar}>
-          <div className={styles.scrollHint}>
-            <ArrowDown
-              size={14}
-              strokeWidth={1.1}
-            />
-
-            <span>SCROLL TO EXPLORE</span>
-          </div>
-
-          <div className={styles.controls}>
-            {/* COUNTER */}
-
-            <div className={styles.counter}>
-              <span>{activeSlide.id}</span>
-              <i>/</i>
-              <span>04</span>
-            </div>
-
-            {/* PROGRESS */}
-
-            <div className={styles.progress}>
-              {heroSlides.map((slide, index) => (
+              <div className={styles.buttons}>
                 <button
-                  key={slide.id}
                   type="button"
-                  className={`${styles.progressButton} ${
-                    index === activeIndex
-                      ? styles.activeProgress
-                      : ""
-                  }`}
-                  onClick={() => goToSlide(index)}
-                  aria-label={`Go to slide ${
-                    index + 1
-                  }`}
-                  aria-current={
-                    index === activeIndex
-                      ? "true"
-                      : undefined
-                  }
+                  onClick={() => setPlaying((value) => !value)}
+                  aria-label={playing ? "Pause slideshow" : "Play slideshow"}
+                  aria-pressed={!playing}
+                  data-magnetic="0.4"
                 >
-                  <span className={styles.progressNumber}>
-                    {slide.id}
-                  </span>
-
-                  <span
-                    className={styles.progressTrack}
-                  >
-                    <span
-                      className={styles.progressFill}
-                    />
-                  </span>
+                  {playing ? (
+                    <Pause size={15} strokeWidth={1.5} />
+                  ) : (
+                    <Play size={15} strokeWidth={1.5} />
+                  )}
                 </button>
-              ))}
+                <button
+                  type="button"
+                  onClick={() => go(index - 1)}
+                  aria-label="Previous frame"
+                  data-magnetic="0.4"
+                >
+                  <ArrowLeft size={16} strokeWidth={1.5} />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => go(index + 1)}
+                  aria-label="Next frame"
+                  data-magnetic="0.4"
+                >
+                  <ArrowRight size={16} strokeWidth={1.5} />
+                </button>
+              </div>
             </div>
+          </motion.div>
 
-            {/* ARROWS */}
+          <motion.div className={styles.scrollCue} style={{ opacity: fade }} aria-hidden="true">
+            <span className={styles.scrollLine} />
+            <ArrowDown size={14} strokeWidth={1.5} />
+            <span>Scroll</span>
+          </motion.div>
 
-            <div className={styles.arrows}>
-              <button
-                type="button"
-                onClick={previousSlide}
-                aria-label="Previous slide"
-              >
-                <ArrowLeft
-                  size={16}
-                  strokeWidth={1.15}
-                />
-              </button>
-
-              <button
-                type="button"
-                onClick={nextSlide}
-                aria-label="Next slide"
-              >
-                <ArrowRight
-                  size={16}
-                  strokeWidth={1.15}
-                />
-              </button>
-            </div>
+          <div className={styles.side} aria-hidden="true">
+            <span>FORM</span>
+            <i />
+            <span>FUNCTION</span>
+            <i />
+            <span>MOVEMENT</span>
           </div>
         </div>
-      </div>
 
-      {/* =========================
-          SIDE LABEL
-      ========================= */}
-
-      <div className={styles.sideLabel}>
-        <span>FORM</span>
-        <b>/</b>
-        <span>FUNCTION</span>
-        <b>/</b>
-        <span>MOVEMENT</span>
+        {/* --------- revealed as the panel fills the screen --------- */}
+        <motion.div
+          className={styles.outro}
+          style={{ opacity: late, y: lateY }}
+          aria-hidden="true"
+        >
+          <span className="mono">SPIRIT — DESIGNED FOR MOVEMENT</span>
+          <span className={`display ${styles.outroWord}`}>INTENT</span>
+        </motion.div>
       </div>
     </section>
   );

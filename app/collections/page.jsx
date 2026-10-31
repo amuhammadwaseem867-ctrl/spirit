@@ -1,9 +1,13 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
+
+import PageHero from "@/components/PageHero";
+import CtaBand from "@/components/CtaBand";
+import KineticText from "@/components/ui/KineticText";
+import Reveal from "@/components/ui/Reveal";
+import RiseImage from "@/components/ui/RiseImage";
 
 import styles from "./Collections.module.css";
 
@@ -11,237 +15,117 @@ const collections = [
   {
     number: "01",
     title: "WOMEN",
-    category: "WOMEN / COLLECTION",
+    category: "Women / Collection",
     description:
       "Essential silhouettes engineered around movement, balance and everyday performance.",
     image: "/images/collections/women.jpeg",
+    alt: "Athlete walking across a wide concrete hall",
+    ratio: "16 / 10",
     href: "/women",
   },
   {
     number: "02",
     title: "MEN",
-    category: "MEN / COLLECTION",
+    category: "Men / Collection",
     description:
       "Clean technical layers built for training, recovery and everything between.",
     image: "/images/collections/men.jpeg",
+    alt: "Athlete walking through a column of light",
+    ratio: "4 / 5",
     href: "/men",
   },
   {
     number: "03",
     title: "TRAINING",
-    category: "TRAINING / COLLECTION",
+    category: "Training / Collection",
     description:
       "Focused performance pieces made to move with the body through every session.",
     image: "/images/collections/training.jpeg",
-    href: "/shop",
+    alt: "Athlete in a lateral lunge on a sunlit concrete floor",
+    ratio: "16 / 10",
+    href: "/shop?category=TRAINING",
   },
   {
     number: "04",
     title: "PERFORMANCE",
-    category: "PERFORMANCE / COLLECTION",
+    category: "Performance / Collection",
     description:
       "Technical essentials where function, form and restraint come together.",
     image: "/images/collections/performance.jpeg",
-    href: "/shop",
+    alt: "Athlete in a technical jacket walking through a concrete atrium",
+    ratio: "4 / 5",
+    href: "/shop?category=PERFORMANCE",
   },
 ];
 
 export default function CollectionsPage() {
   return (
-    <main className={styles.collections}>
-      {/* =====================================================
-          HERO
-      ===================================================== */}
+    <main>
+      <PageHero
+        index="01"
+        label="COLLECTIONS"
+        title={["THE", "COLLECTIONS."]}
+        outline={[1]}
+        intro="A considered system of activewear built around movement, performance and everyday life."
+        aside={"04 Collections\nSPIRIT / 2026"}
+      />
 
-      <section className={styles.hero}>
-        <div className={styles.heroMeta}>
-          <span>01</span>
-          <span>SPIRIT / COLLECTIONS</span>
-          <span>2026</span>
-        </div>
-
-        <div className={styles.heroContent}>
-          <motion.div
-            className={styles.heroHeading}
-            initial={{ opacity: 0, y: 45 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.85,
-              ease: [0.16, 1, 0.3, 1],
-            }}
-          >
-            <span className={styles.eyebrow}>
-              DESIGNED FOR MOVEMENT
-            </span>
-
-            <h1>
-              THE
-              <br />
-              COLLECTIONS.
-            </h1>
-          </motion.div>
-
-          <motion.div
-            className={styles.heroIntro}
-            initial={{ opacity: 0, y: 25 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.75,
-              delay: 0.15,
-              ease: [0.16, 1, 0.3, 1],
-            }}
-          >
-            <p>
-              A considered system of activewear
-              built around movement, performance
-              and everyday life.
-            </p>
-
-            <span>
-              04 COLLECTIONS
-              <br />
-              SPIRIT / 2026
-            </span>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* =====================================================
-          COLLECTION GRID
-      ===================================================== */}
-
-      <section className={styles.collectionSection}>
-        <div className={styles.sectionHeader}>
-          <div className={styles.sectionMeta}>
+      <section className={`${styles.list} surface-ink`}>
+        <div className="wrap">
+          <div className="meta">
             <span>02</span>
-            <span>EXPLORE COLLECTIONS</span>
+            <span>The system</span>
+            <span>Four directions</span>
           </div>
 
-          <p>
-            Explore the SPIRIT system through
-            distinct categories designed for
-            different forms of movement.
-          </p>
-        </div>
-
-        <div className={styles.grid}>
-          {collections.map((collection, index) => (
-            <motion.article
-              key={collection.number}
-              className={`${styles.card} ${
-                index === 1
-                  ? styles.cardOffset
-                  : ""
-              }`}
-              initial={{
-                opacity: 0,
-                y: 55,
-              }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
-              }}
-              viewport={{
-                once: true,
-                amount: 0.15,
-              }}
-              transition={{
-                duration: 0.8,
-                delay: (index % 2) * 0.08,
-                ease: [0.16, 1, 0.3, 1],
-              }}
+          {collections.map((item, index) => (
+            <article
+              key={item.number}
+              className={styles.row}
+              data-flip={index % 2 === 1 ? "true" : "false"}
             >
-              <Link
-                href={collection.href}
-                className={styles.cardLink}
-              >
-                <div className={styles.imageWrap}>
-                  <Image
-                    src={collection.image}
-                    alt={`${collection.title} collection`}
-                    fill
-                    priority={index < 2}
-                    sizes="(max-width: 900px) 92vw, 55vw"
-                  />
-
-                  <div className={styles.imageOverlay} />
-
-                  <div className={styles.cardTop}>
-                    <span>
-                      {collection.number}
-                    </span>
-
-                    <span>
-                      {collection.category}
-                    </span>
-                  </div>
-
-                  <div className={styles.cardAction}>
-                    <span>EXPLORE</span>
-
-                    <span className={styles.actionIcon}>
-                      <ArrowUpRight
-                        size={16}
-                        strokeWidth={1.1}
-                      />
-                    </span>
-                  </div>
-                </div>
-
-                <div className={styles.cardInfo}>
-                  <h2>{collection.title}</h2>
-
-                  <p>
-                    {collection.description}
-                  </p>
-                </div>
+              <Link href={item.href} className={styles.media} data-cursor="EXPLORE" aria-label={`${item.title} collection`}>
+                <RiseImage
+                  src={item.image}
+                  alt={item.alt}
+                  ratio={item.ratio}
+                  priority={index === 0}
+                  sizes="(max-width: 1000px) 92vw, 58vw"
+                />
               </Link>
-            </motion.article>
+
+              <Reveal className={styles.copy}>
+                <span className={`reveal ${styles.number}`}>
+                  {item.number} / 04
+                </span>
+                <KineticText
+                  as="h2"
+                  lines={[item.title]}
+                  className={`display ${styles.title}`}
+                />
+                <span className="eyebrow reveal" style={{ "--rd": "80ms" }}>
+                  {item.category}
+                </span>
+                <p className="reveal" style={{ "--rd": "140ms" }}>
+                  {item.description}
+                </p>
+                <Link href={item.href} className="link-line reveal" style={{ "--rd": "200ms" }}>
+                  Explore {item.title.toLowerCase()} <ArrowUpRight size={14} strokeWidth={1.5} />
+                </Link>
+              </Reveal>
+            </article>
           ))}
         </div>
       </section>
 
-      {/* =====================================================
-          STATEMENT
-      ===================================================== */}
-
-      <section className={styles.statement}>
-        <div className={styles.statementMeta}>
-          <span>03</span>
-          <span>THE SPIRIT SYSTEM</span>
-        </div>
-
-        <div className={styles.statementContent}>
-          <h2>
-            ONE BODY.
-            <br />
-            <span>EVERY MOVEMENT.</span>
-          </h2>
-
-          <div className={styles.statementSide}>
-            <p>
-              From focused training to the
-              moments beyond it, SPIRIT is
-              designed as one continuous
-              wardrobe for movement.
-            </p>
-
-            <Link
-              href="/shop"
-              className={styles.statementLink}
-            >
-              <span>SHOP ALL</span>
-
-              <span className={styles.statementIcon}>
-                <ArrowUpRight
-                  size={16}
-                  strokeWidth={1.1}
-                />
-              </span>
-            </Link>
-          </div>
-        </div>
-      </section>
+      <CtaBand
+        index="03"
+        label="SPIRIT / One system"
+        title={["ONE BODY.", "ONE SYSTEM."]}
+        copy="From focused training to the moments beyond it, SPIRIT is designed as one continuous wardrobe for movement."
+        href="/shop"
+        cta="Shop everything"
+      />
     </main>
   );
 }

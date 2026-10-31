@@ -109,6 +109,7 @@ export default function SearchOverlay({
           tabIndex={-1}
           className={styles.overlay}
           role="dialog"
+          data-lenis-prevent
           aria-modal="true"
           aria-label="Search"
           initial={{

@@ -12,7 +12,7 @@
   height: 100%;
   padding: 0;
   border: 0;
-  background: rgba(16, 19, 23, 0.48);
+  background: rgba(10, 10, 11, 0.48);
   cursor: pointer;
   animation: backdropIn 280ms ease both;
 }
@@ -25,9 +25,9 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  background: #f5f5f2;
-  color: #101317;
-  box-shadow: -18px 0 60px rgba(16, 19, 23, 0.12);
+  background: #ecebe6;
+  color: #0a0a0b;
+  box-shadow: -18px 0 60px rgba(10, 10, 11, 0.12);
   animation: drawerIn 460ms
     cubic-bezier(0.16, 1, 0.3, 1)
     both;
@@ -37,7 +37,7 @@
   flex: 0 0 auto;
   padding: 25px 32px 23px;
   border-bottom: 1px solid
-    rgba(16, 19, 23, 0.14);
+    rgba(10, 10, 11, 0.14);
 }
 
 .headerMeta,
@@ -46,7 +46,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  color: rgba(16, 19, 23, 0.46);
+  color: rgba(10, 10, 11, 0.46);
   font-size: 9px;
   font-weight: 600;
   letter-spacing: 0.16em;
@@ -78,10 +78,10 @@
   place-items: center;
   padding: 0;
   border: 1px solid
-    rgba(16, 19, 23, 0.16);
+    rgba(10, 10, 11, 0.16);
   border-radius: 50%;
   background: transparent;
-  color: #101317;
+  color: #0a0a0b;
   cursor: pointer;
   transition:
     background 180ms ease,
@@ -90,8 +90,8 @@
 }
 
 .closeButton:hover {
-  background: #101317;
-  color: #f5f5f2;
+  background: #0a0a0b;
+  color: #ecebe6;
   transform: rotate(4deg);
 }
 
@@ -102,7 +102,7 @@
   overscroll-behavior: contain;
   scrollbar-width: thin;
   scrollbar-color:
-    rgba(16, 19, 23, 0.2)
+    rgba(10, 10, 11, 0.2)
     transparent;
 }
 
@@ -113,7 +113,7 @@
 .item {
   padding: 27px 0;
   border-bottom: 1px solid
-    rgba(16, 19, 23, 0.12);
+    rgba(10, 10, 11, 0.12);
 }
 
 .itemTop {
@@ -139,7 +139,7 @@
   display: grid;
   place-items: center;
   background: #deded9;
-  color: rgba(16, 19, 23, 0.35);
+  color: rgba(10, 10, 11, 0.35);
   font-size: 9px;
   font-weight: 600;
   letter-spacing: 0.18em;
@@ -149,7 +149,7 @@
   position: absolute;
   top: 10px;
   left: 10px;
-  color: #f5f5f2;
+  color: #ecebe6;
   font-size: 9px;
   font-weight: 600;
   letter-spacing: 0.1em;
@@ -173,7 +173,7 @@
 .category {
   display: block;
   margin-bottom: 9px;
-  color: rgba(16, 19, 23, 0.46);
+  color: rgba(10, 10, 11, 0.46);
   font-size: 8px;
   font-weight: 600;
   letter-spacing: 0.15em;
@@ -195,9 +195,9 @@
   padding: 0 0 4px;
   border: 0;
   border-bottom: 1px solid
-    rgba(16, 19, 23, 0.35);
+    rgba(10, 10, 11, 0.35);
   background: transparent;
-  color: rgba(16, 19, 23, 0.5);
+  color: rgba(10, 10, 11, 0.5);
   font: inherit;
   font-size: 8px;
   font-weight: 600;
@@ -210,8 +210,8 @@
 }
 
 .remove:hover {
-  color: #101317;
-  border-color: #101317;
+  color: #0a0a0b;
+  border-color: #0a0a0b;
 }
 
 .size {
@@ -219,14 +219,14 @@
   align-items: center;
   gap: 10px;
   margin-top: 23px;
-  color: rgba(16, 19, 23, 0.44);
+  color: rgba(10, 10, 11, 0.44);
   font-size: 8px;
   font-weight: 600;
   letter-spacing: 0.13em;
 }
 
 .size strong {
-  color: #101317;
+  color: #0a0a0b;
   font-size: 9px;
   font-weight: 600;
 }
@@ -246,7 +246,7 @@
   grid-template-columns: 31px 34px 31px;
   align-items: center;
   border: 1px solid
-    rgba(16, 19, 23, 0.16);
+    rgba(10, 10, 11, 0.16);
 }
 
 .quantity button {
@@ -257,13 +257,13 @@
   padding: 0;
   border: 0;
   background: transparent;
-  color: #101317;
+  color: #0a0a0b;
   cursor: pointer;
   transition: background 150ms ease;
 }
 
 .quantity button:hover {
-  background: rgba(16, 19, 23, 0.07);
+  background: rgba(10, 10, 11, 0.07);
 }
 
 .quantity span {
@@ -271,9 +271,9 @@
   place-items: center;
   height: 100%;
   border-left: 1px solid
-    rgba(16, 19, 23, 0.12);
+    rgba(10, 10, 11, 0.12);
   border-right: 1px solid
-    rgba(16, 19, 23, 0.12);
+    rgba(10, 10, 11, 0.12);
   font-size: 10px;
   font-weight: 500;
 }
@@ -285,7 +285,7 @@
 }
 
 .price span {
-  color: rgba(16, 19, 23, 0.45);
+  color: rgba(10, 10, 11, 0.45);
   font-size: 8px;
   font-weight: 600;
   letter-spacing: 0.1em;
@@ -307,7 +307,7 @@
 }
 
 .emptyNumber {
-  color: rgba(16, 19, 23, 0.28);
+  color: rgba(10, 10, 11, 0.28);
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.12em;
@@ -328,7 +328,7 @@
 .emptyContent p {
   max-width: 340px;
   margin: 22px 0 0;
-  color: rgba(16, 19, 23, 0.58);
+  color: rgba(10, 10, 11, 0.58);
   font-size: 12px;
   line-height: 1.65;
 }
@@ -342,8 +342,8 @@
   gap: 14px;
   padding-bottom: 8px;
   border-bottom: 1px solid
-    rgba(16, 19, 23, 0.5);
-  color: #101317;
+    rgba(10, 10, 11, 0.5);
+  color: #0a0a0b;
   font-size: 9px;
   font-weight: 600;
   letter-spacing: 0.14em;
@@ -355,15 +355,15 @@
 
 .emptyLink:hover {
   gap: 20px;
-  border-color: #101317;
+  border-color: #0a0a0b;
 }
 
 .footer {
   flex: 0 0 auto;
   padding: 23px 32px 27px;
   border-top: 1px solid
-    rgba(16, 19, 23, 0.14);
-  background: #f5f5f2;
+    rgba(10, 10, 11, 0.14);
+  background: #ecebe6;
 }
 
 .subtotal {
@@ -375,7 +375,7 @@
 }
 
 .subtotal span {
-  color: rgba(16, 19, 23, 0.52);
+  color: rgba(10, 10, 11, 0.52);
   font-size: 9px;
   font-weight: 600;
   letter-spacing: 0.14em;
@@ -389,7 +389,7 @@
 
 .checkoutNote {
   margin-top: 18px;
-  color: rgba(16, 19, 23, 0.46);
+  color: rgba(10, 10, 11, 0.46);
   font-size: 8px;
   font-weight: 600;
   letter-spacing: 0.12em;
@@ -405,9 +405,9 @@
   justify-content: space-between;
   gap: 20px;
   padding: 0 19px;
-  border: 1px solid #101317;
-  background: #101317;
-  color: #f5f5f2;
+  border: 1px solid #0a0a0b;
+  background: #0a0a0b;
+  color: #ecebe6;
   font: inherit;
   font-size: 9px;
   font-weight: 600;
@@ -423,7 +423,7 @@
   padding: 0;
   border: 0;
   background: transparent;
-  color: rgba(16, 19, 23, 0.55);
+  color: rgba(10, 10, 11, 0.55);
   font: inherit;
   font-size: 8px;
   font-weight: 600;
@@ -435,7 +435,7 @@
 }
 
 .continue:hover {
-  color: #101317;
+  color: #0a0a0b;
 }
 
 @keyframes drawerIn {

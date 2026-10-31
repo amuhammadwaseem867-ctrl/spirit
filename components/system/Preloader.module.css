@@ -1,0 +1,130 @@
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 9500;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  perspective: 1400px;
+}
+
+:global(html[data-intro="skip"]) .preloader {
+  display: none;
+}
+
+.panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 50.5%;
+  background: var(--ink);
+  transition: transform 1.25s var(--ease-in-out);
+  will-change: transform;
+}
+
+.panelTop {
+  top: 0;
+  transform-origin: 50% 0%;
+}
+
+.panelBottom {
+  bottom: 0;
+  transform-origin: 50% 100%;
+}
+
+.preloader[data-phase="exit"] .panelTop {
+  transform: translate3d(0, -100%, 0) rotateX(28deg);
+}
+
+.preloader[data-phase="exit"] .panelBottom {
+  transform: translate3d(0, 100%, 0) rotateX(-28deg);
+}
+
+.content {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 22px;
+  width: min(300px, 70vw);
+  color: var(--bone);
+  transition:
+    opacity 0.5s var(--ease-out),
+    transform 0.9s var(--ease-in-out);
+}
+
+.preloader[data-phase="exit"] .content {
+  opacity: 0;
+  transform: scale(0.94);
+}
+
+.mark {
+  width: 74px;
+  height: auto;
+  overflow: visible;
+}
+
+.mark path {
+  fill: var(--bone);
+  fill-opacity: 0;
+  stroke: var(--bone);
+  stroke-width: 0.6;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation:
+    draw 1.4s var(--ease-in-out) forwards,
+    fill 0.6s var(--ease-out) 1.15s forwards;
+}
+
+.mark path:nth-child(2) {
+  animation-delay: 0.18s, 1.3s;
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fill {
+  to {
+    fill-opacity: 1;
+    stroke-opacity: 0;
+  }
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.2em;
+}
+
+.count {
+  font-variant-numeric: tabular-nums;
+}
+
+.bar {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: var(--line-dark-strong);
+  overflow: hidden;
+}
+
+.barFill {
+  position: absolute;
+  inset: 0;
+  background: var(--signal);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.tagline {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.2em;
+  color: var(--fg-dark-faint);
+}

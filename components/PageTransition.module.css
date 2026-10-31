@@ -1,29 +1,83 @@
-.page {
-  position: relative;
-  width: 100%;
-  min-height: 100%;
-  isolation: isolate;
-}
-
-.wipe {
+.curtain {
   position: fixed;
   inset: 0;
-  z-index: 9999;
+  z-index: 9400;
+  display: flex;
   pointer-events: none;
-  background: #101317;
-  transform-origin: top;
+  perspective: 1600px;
+  visibility: hidden;
 }
 
-/* =========================================
-   REDUCED MOTION
-========================================= */
+.curtain[data-phase="cover"],
+.curtain[data-phase="reveal"] {
+  visibility: visible;
+}
+
+.curtain[data-phase="cover"] {
+  pointer-events: auto;
+}
+
+.column {
+  flex: 1;
+  height: 100%;
+  margin-right: -1px;
+  background: var(--ink);
+  transform: scaleY(0);
+  transform-origin: 50% 100%;
+}
+
+.curtain[data-phase="cover"] .column {
+  transform: scaleY(1);
+  transition: transform 0.62s var(--ease-in-out) calc(var(--i) * 0.035s);
+}
+
+.curtain[data-phase="reveal"] .column {
+  transform: scaleY(0);
+  transform-origin: 50% 0%;
+  transition: transform 0.85s var(--ease-in-out) calc(var(--i) * 0.045s);
+}
+
+.center {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 22px;
+  color: var(--bone);
+  opacity: 0;
+  transform: translateY(16px) rotateX(-40deg);
+  transform-origin: 50% 100%;
+}
+
+.curtain[data-phase="cover"] .center {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.5s var(--ease-out) 0.3s,
+    transform 0.8s var(--ease-expo) 0.3s;
+}
+
+.curtain[data-phase="reveal"] .center {
+  opacity: 0;
+  transform: translateY(-16px);
+  transition:
+    opacity 0.3s var(--ease-out),
+    transform 0.5s var(--ease-out);
+}
+
+.mark {
+  width: auto;
+  height: 54px;
+}
+
+.label {
+  font-size: clamp(40px, 7vw, 120px);
+  line-height: 0.85;
+}
 
 @media (prefers-reduced-motion: reduce) {
-  .page {
-    opacity: 1 !important;
-  }
-
-  .wipe {
+  .curtain {
     display: none;
   }
 }

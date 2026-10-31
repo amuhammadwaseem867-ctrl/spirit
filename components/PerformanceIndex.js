@@ -1,12 +1,12 @@
 "use client";
 
-import { motion } from "framer-motion";
-import {
-  ArrowUpRight,
-  MoveUpRight,
-} from "lucide-react";
+import { useState } from "react";
+import Link from "next/link";
+import { ArrowUpRight, RotateCw } from "lucide-react";
 
-import StrokeText from "./StrokeText";
+import KineticText from "@/components/ui/KineticText";
+import Reveal from "@/components/ui/Reveal";
+
 import styles from "./PerformanceIndex.module.css";
 
 const principles = [
@@ -24,7 +24,7 @@ const principles = [
   },
   {
     number: "03",
-    title: "RESPONSIVENESS",
+    title: "RESPONSE",
     description:
       "Performance-minded design that stays focused on movement rather than visual distraction.",
   },
@@ -37,265 +37,128 @@ const principles = [
 ];
 
 const stages = [
-  {
-    number: "01",
-    label: "MOVE",
-    text: "Built around the way the body moves.",
-  },
-  {
-    number: "02",
-    label: "TRAIN",
-    text: "Focused on the demands of training.",
-  },
-  {
-    number: "03",
-    label: "RECOVER",
-    text: "Designed to transition beyond performance.",
-  },
+  { number: "01", label: "MOVE", text: "Built around the way the body moves.", level: 0.38 },
+  { number: "02", label: "TRAIN", text: "Focused on the demands of training.", level: 0.68 },
+  { number: "03", label: "RECOVER", text: "Designed to transition beyond performance.", level: 1 },
 ];
+
+function Principle({ item, index }) {
+  const [flipped, setFlipped] = useState(false);
+
+  return (
+    <li
+      className={`reveal ${styles.principle}`}
+      style={{ "--rd": `${index * 90}ms` }}
+    >
+      <button
+        type="button"
+        className={styles.flip}
+        data-flipped={flipped ? "true" : "false"}
+        onClick={() => setFlipped((value) => !value)}
+        aria-pressed={flipped}
+        aria-label={`${item.title}: ${item.description}`}
+      >
+        <span className={styles.face}>
+          <span className={styles.faceTop}>
+            <span>{item.number}</span>
+            <RotateCw size={14} strokeWidth={1.5} aria-hidden="true" />
+          </span>
+          <span className={`display ${styles.faceTitle}`}>{item.title}</span>
+        </span>
+
+        <span className={`${styles.face} ${styles.back}`} aria-hidden="true">
+          <span className={styles.faceTop}>
+            <span>{item.number} / Principle</span>
+          </span>
+          <span className={styles.backText}>{item.description}</span>
+        </span>
+      </button>
+    </li>
+  );
+}
 
 export default function PerformanceIndex() {
   return (
-    <section className={styles.section}>
-      {/* HEADER */}
-      <div className={styles.header}>
-        <div className={styles.meta}>
-          <span>03</span>
+    <section className={`${styles.section} surface-bone`}>
+      <div className="wrap">
+        <div className="meta">
+          <span>05</span>
           <span>PERFORMANCE INDEX</span>
-          <span>SPIRIT / 2026</span>
+          <span>LAHORE / PAKISTAN</span>
         </div>
 
-        <div className={styles.headingWrap}>
-          <motion.h2
-            initial={{
-              opacity: 0,
-              y: 35,
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-            }}
-            viewport={{
-              once: true,
-              amount: 0.3,
-            }}
-            transition={{
-              duration: 0.8,
-              ease: [0.16, 1, 0.3, 1],
-            }}
-          >
-            DESIGNED
-            <br />
-            AROUND
-            <br />
-            <StrokeText
-              color="#101317"
-              strokeColor="rgba(16, 19, 23, 0.9)"
-              strokeWidth={1.15}
-              className={styles.stroke}
-            >
-              MOVEMENT.
-            </StrokeText>
-          </motion.h2>
+        <div className={styles.header}>
+          <KineticText
+            as="h2"
+            lines={["DESIGNED", "AROUND", "MOVEMENT."]}
+            outline={[2]}
+            className={`display ${styles.heading}`}
+          />
 
-          <motion.div
-            className={styles.intro}
-            initial={{
-              opacity: 0,
-              y: 25,
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-            }}
-            viewport={{
-              once: true,
-              amount: 0.3,
-            }}
-            transition={{
-              duration: 0.7,
-              delay: 0.12,
-            }}
-          >
-            <span className={styles.introLabel}>
-              HOW SPIRIT MOVES
-            </span>
-
-            <p>
-              Performance is not a single
-              specification. It is the relationship
-              between body, garment and movement.
+          <Reveal className={styles.intro}>
+            <span className="eyebrow reveal">How SPIRIT moves</span>
+            <p className="reveal" style={{ "--rd": "80ms" }}>
+              Performance is not a single specification. It is the
+              relationship between body, garment and movement.
             </p>
-
-            <span className={styles.location}>
-              LAHORE / PAKISTAN
-            </span>
-          </motion.div>
-        </div>
-      </div>
-
-      {/* PRINCIPLES */}
-      <div className={styles.principles}>
-        <div className={styles.principlesHeader}>
-          <span>04</span>
-          <span>DESIGN PRINCIPLES</span>
-          <span>THE SPIRIT SYSTEM</span>
+          </Reveal>
         </div>
 
-        <div className={styles.principlesGrid}>
+        <Reveal as="ul" className={styles.principles} threshold={0.15}>
           {principles.map((item, index) => (
-            <motion.article
-              key={item.number}
-              className={styles.principle}
-              initial={{
-                opacity: 0,
-                y: 35,
-              }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
-              }}
-              viewport={{
-                once: true,
-                amount: 0.2,
-              }}
-              transition={{
-                duration: 0.65,
-                delay: index * 0.07,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-            >
-              <div className={styles.principleTop}>
-                <span>{item.number}</span>
-
-                <MoveUpRight
-                  size={17}
-                  strokeWidth={1}
-                />
-              </div>
-
-              <h3>{item.title}</h3>
-
-              <p>{item.description}</p>
-
-              <div
-                className={styles.principleLine}
-              />
-            </motion.article>
+            <Principle key={item.number} item={item} index={index} />
           ))}
-        </div>
-      </div>
+        </Reveal>
 
-      {/* MOVEMENT SYSTEM */}
-      <div className={styles.system}>
-        <div className={styles.systemHeader}>
-          <div>
-            <span>05</span>
-            <span>MOVEMENT SYSTEM</span>
+        <Reveal className={styles.system} threshold={0.25}>
+          <div className={styles.systemHeader}>
+            <span className="mono">06 — Movement system</span>
+            <p>One wardrobe. Different states of movement.</p>
           </div>
 
-          <p>
-            One wardrobe. Different states of
-            movement.
-          </p>
-        </div>
-
-        <div className={styles.stages}>
-          {stages.map((stage, index) => (
-            <motion.div
-              key={stage.number}
-              className={styles.stage}
-              initial={{
-                opacity: 0,
-              }}
-              whileInView={{
-                opacity: 1,
-              }}
-              viewport={{
-                once: true,
-                amount: 0.25,
-              }}
-              transition={{
-                duration: 0.6,
-                delay: index * 0.1,
-              }}
-            >
-              <div className={styles.stageTop}>
-                <span>{stage.number}</span>
-
-                <ArrowUpRight
-                  size={16}
-                  strokeWidth={1}
-                />
-              </div>
-
-              <h3>{stage.label}</h3>
-
-              <p>{stage.text}</p>
-
-              <div className={styles.stageProgress}>
-                <span
-                  style={{
-                    width: `${35 + index * 30}%`,
-                  }}
-                />
-              </div>
-            </motion.div>
-          ))}
-        </div>
+          <ol className={styles.stages}>
+            {stages.map((stage, index) => (
+              <li key={stage.number} className={`reveal ${styles.stage}`} style={{ "--rd": `${index * 120}ms` }}>
+                <div className={styles.stageTop}>
+                  <span>{stage.number}</span>
+                  <span>Stage</span>
+                </div>
+                <h3 className="display-condensed">{stage.label}</h3>
+                <p>{stage.text}</p>
+                <span className={styles.meter}>
+                  <span style={{ "--level": stage.level, "--rd": `${300 + index * 160}ms` }} />
+                </span>
+              </li>
+            ))}
+          </ol>
+        </Reveal>
       </div>
 
-      {/* CLOSING STATEMENT */}
-      <motion.div
-        className={styles.closing}
-        initial={{
-          opacity: 0,
-        }}
-        whileInView={{
-          opacity: 1,
-        }}
-        viewport={{
-          once: true,
-          amount: 0.25,
-        }}
-        transition={{
-          duration: 0.8,
-        }}
-      >
-        <div className={styles.closingMeta}>
-          <span>06</span>
-          <span>PERFORMANCE / SPIRIT</span>
-        </div>
+      <Reveal className={`${styles.closing} surface-ink`}>
+        <div className="wrap">
+          <div className="meta">
+            <span>07</span>
+            <span>FUNCTION / SPIRIT</span>
+            <span>2026</span>
+          </div>
 
-        <h3>
-          FUNCTION
-          <br />
-          <StrokeText
-            color="#f5f5f2"
-            strokeColor="rgba(245, 245, 242, 0.95)"
-            strokeWidth={1.15}
-            className={styles.darkStroke}
-          >
-            WITHOUT
-          </StrokeText>
-          <br />
-          DISTRACTION.
-        </h3>
-
-        <a
-          href="/shop"
-          className={styles.cta}
-        >
-          <span>EXPLORE PERFORMANCE</span>
-
-          <span className={styles.ctaIcon}>
-            <ArrowUpRight
-              size={17}
-              strokeWidth={1.1}
+          <div className={styles.closingBody}>
+            <KineticText
+              as="h3"
+              lines={["FUNCTION", "WITHOUT", "DISTRACTION."]}
+              outline={[1]}
+              className={`display ${styles.closingHeading}`}
             />
-          </span>
-        </a>
-      </motion.div>
+
+            <Link href="/shop?category=PERFORMANCE" className="btn reveal" data-magnetic="0.25">
+              <span className="btn-label">Explore performance</span>
+              <span className="btn-icon">
+                <ArrowUpRight size={16} strokeWidth={1.5} />
+              </span>
+            </Link>
+          </div>
+        </div>
+      </Reveal>
     </section>
   );
 }

@@ -1,113 +1,103 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 
-import StrokeText from "@/components/StrokeText";
+import Marquee from "@/components/ui/Marquee";
+import ScrubText from "@/components/ui/ScrubText";
+import Reveal from "@/components/ui/Reveal";
+
 import styles from "./Manifesto.module.css";
 
+/*
+ * Each word swings up from the floor (rotateX) and drifts sideways
+ * as it crosses the viewport. Transforms are scroll-scrubbed, so the
+ * motion always matches the reader's pace.
+ */
+function Word({ children, progress, from, to, drift, outline = false }) {
+  const rotateX = useTransform(progress, [from, to], [78, 0]);
+  const y = useTransform(progress, [from, to], ["32%", "0%"]);
+  const x = useTransform(progress, [0, 1], [`${-drift}vw`, `${drift}vw`]);
+  const opacity = useTransform(progress, [from, from + 0.08], [0, 1]);
+
+  return (
+    <motion.span
+      className={`display ${styles.word} ${outline ? styles.outline : ""}`}
+      style={{ rotateX, y, x, opacity }}
+    >
+      {children}
+    </motion.span>
+  );
+}
+
 export default function Manifesto() {
-  const sectionRef = useRef(null);
+  const wordsRef = useRef(null);
 
-  const isInView = useInView(sectionRef, {
-    once: true,
-    amount: 0.3,
-  });
-
-  const reveal = (delay = 0) => ({
-    initial: {
-      opacity: 0,
-      y: 45,
-    },
-    animate: isInView
-      ? {
-          opacity: 1,
-          y: 0,
-        }
-      : {
-          opacity: 0,
-          y: 45,
-        },
-    transition: {
-      duration: 0.8,
-      delay,
-      ease: [0.16, 1, 0.3, 1],
-    },
+  const { scrollYProgress } = useScroll({
+    target: wordsRef,
+    offset: ["start end", "end start"],
   });
 
   return (
-    <section
-      ref={sectionRef}
-      id="manifesto"
-      className={styles.manifesto}
-    >
-      <div className={styles.inner}>
-        {/* META */}
-
-        <motion.div
-          className={styles.meta}
-          {...reveal(0)}
-        >
+    <section id="manifesto" className={`${styles.manifesto} surface-ink`}>
+      <div className="wrap">
+        <div className="meta">
           <span>01</span>
-
           <span>MANIFESTO</span>
-
           <span>SPIRIT / 2026</span>
-        </motion.div>
-
-        {/* STATEMENT */}
-
-        <div className={styles.statement}>
-          <motion.p
-            className={styles.intro}
-            {...reveal(0.08)}
-          >
-            Movement is not a moment.
-            <br />
-            It is a way of being.
-          </motion.p>
-
-          <div className={styles.mainText}>
-            <motion.span {...reveal(0.16)}>
-              MOVE
-            </motion.span>
-
-            <motion.div
-              className={styles.strokeWord}
-              {...reveal(0.3)}
-            >
-              <StrokeText>WITH</StrokeText>
-            </motion.div>
-
-            <motion.span {...reveal(0.44)}>
-              INTENT.
-            </motion.span>
-          </div>
         </div>
 
-        {/* BOTTOM INFORMATION */}
-
-        <motion.div
-          className={styles.bottom}
-          {...reveal(0.56)}
-        >
-          <p>
-            SPIRIT exists at the intersection of
-            <br />
-            performance, design and everyday movement.
-          </p>
-
-          <div className={styles.divider} />
-
-          <span className={styles.location}>
-            DESIGNED FOR MOVEMENT
-          </span>
-
-          <span className={styles.year}>
-            SPIRIT / 2026
-          </span>
-        </motion.div>
+        <div className={styles.intro}>
+          <span className={`eyebrow ${styles.eyebrow}`}>The idea</span>
+          <ScrubText
+            className={styles.statement}
+            text="Movement is not a moment. It is a way of being — the first step, the hundredth rep, the walk home. SPIRIT is built for all of it."
+          />
+        </div>
       </div>
+
+      <div ref={wordsRef} className={styles.words} aria-label="Move with intent">
+        <div className={styles.stage} aria-hidden="true">
+          <Word progress={scrollYProgress} from={0.05} to={0.32} drift={3}>
+            MOVE
+          </Word>
+          <Word progress={scrollYProgress} from={0.12} to={0.4} drift={-5} outline>
+            WITH
+          </Word>
+          <Word progress={scrollYProgress} from={0.2} to={0.48} drift={4}>
+            INTENT.
+          </Word>
+        </div>
+      </div>
+
+      <Reveal className={`wrap ${styles.bottom}`}>
+        <p className={`reveal ${styles.copy}`}>
+          SPIRIT exists at the intersection of performance, design and
+          everyday movement. From Lahore, for wherever you move next.
+        </p>
+
+        <div className={`reveal ${styles.facts}`} style={{ "--rd": "120ms" }}>
+          <div>
+            <span className="mono">Origin</span>
+            <strong>Lahore / PK</strong>
+          </div>
+          <div>
+            <span className="mono">System</span>
+            <strong>4 Collections</strong>
+          </div>
+          <div>
+            <span className="mono">Principle</span>
+            <strong>Nothing extra</strong>
+          </div>
+        </div>
+      </Reveal>
+
+      <Marquee
+        className={`display-condensed ${styles.marquee}`}
+        items={["PERFORMANCE", "TRAINING", "RECOVERY", "EVERYDAY", "MOVEMENT"]}
+        speed={36}
+        separator="✕"
+      />
     </section>
   );
 }

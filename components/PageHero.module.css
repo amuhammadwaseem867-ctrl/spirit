@@ -1,0 +1,143 @@
+.hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow: hidden;
+}
+
+/* ---------- visual ---------- */
+
+.visual {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.visual[data-visual="monogram"] {
+  left: 38%;
+}
+
+.visual[data-visual="image"] {
+  inset: auto var(--gutter) auto auto;
+  top: calc(var(--nav-h) + 64px);
+  bottom: 120px;
+  width: min(38vw, 600px);
+  perspective: 1400px;
+}
+
+.frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  transform-origin: 50% 100%;
+}
+
+.image {
+  object-fit: cover;
+}
+
+.frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10, 10, 11, 0.25), transparent 35%, transparent 65%, rgba(10, 10, 11, 0.45));
+}
+
+.markFallback {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.markFallback svg {
+  width: min(22vw, 220px);
+  height: auto;
+  color: #38383b;
+}
+
+/* ---------- copy ---------- */
+
+.inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding-top: calc(var(--nav-h) + 10px);
+  padding-bottom: clamp(24px, 4vh, 44px);
+  pointer-events: none;
+}
+
+.inner a,
+.inner button {
+  pointer-events: auto;
+}
+
+.titleWrap {
+  align-self: end;
+  padding-bottom: clamp(28px, 4vh, 52px);
+}
+
+.title {
+  font-size: clamp(40px, min(11vw, calc(100vw / var(--chars, 8))), 220px);
+  text-shadow: 0 0.04em 0.5em rgba(0, 0, 0, 0.3);
+}
+
+.bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 18px 48px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line-dark);
+}
+
+.intro {
+  max-width: 40ch;
+  font-size: clamp(16px, 1.3vw, 20px);
+  line-height: 1.5;
+  color: var(--fg-dark-muted);
+}
+
+.aside {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  line-height: 1.7;
+  color: var(--fg-dark-faint);
+  white-space: pre-line;
+}
+
+.cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg-dark-faint);
+}
+
+@media (max-width: 900px) {
+  .visual[data-visual="monogram"] {
+    left: 0;
+    bottom: 40%;
+  }
+
+  .visual[data-visual="image"] {
+    top: calc(var(--nav-h) + 56px);
+    left: var(--gutter);
+    right: var(--gutter);
+    bottom: 46%;
+    width: auto;
+  }
+
+  .cue {
+    display: none;
+  }
+}

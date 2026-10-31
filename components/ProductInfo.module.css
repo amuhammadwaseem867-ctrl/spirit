@@ -1,11 +1,11 @@
 .info {
   width: 100%;
-  color: #101317;
+  color: #0a0a0b;
 }
 
 .header {
   padding-bottom: 42px;
-  border-bottom: 1px solid rgba(16, 19, 23, 0.14);
+  border-bottom: 1px solid rgba(10, 10, 11, 0.14);
 }
 
 .category {
@@ -16,7 +16,7 @@
 
   margin-bottom: 28px;
 
-  color: rgba(16, 19, 23, 0.45);
+  color: rgba(10, 10, 11, 0.45);
   font-size: 8px;
   font-weight: 500;
   line-height: 1;
@@ -29,7 +29,7 @@
 
   margin: 0;
 
-  color: #101317;
+  color: #0a0a0b;
   font-size: clamp(46px, 5vw, 86px);
   font-weight: 500;
   line-height: 0.86;
@@ -42,7 +42,7 @@
 
   margin-top: 30px;
 
-  color: rgba(16, 19, 23, 0.62);
+  color: rgba(10, 10, 11, 0.62);
   font-size: 13px;
   font-weight: 400;
   line-height: 1.6;
@@ -56,14 +56,14 @@
 
   margin-top: 32px;
 
-  color: #101317;
+  color: #0a0a0b;
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 0.03em;
 }
 
 .price span:first-child {
-  color: rgba(16, 19, 23, 0.45);
+  color: rgba(10, 10, 11, 0.45);
   font-size: 8px;
   letter-spacing: 0.14em;
 }
@@ -72,7 +72,7 @@
 
 .purchase {
   padding: 34px 0 38px;
-  border-bottom: 1px solid rgba(16, 19, 23, 0.14);
+  border-bottom: 1px solid rgba(10, 10, 11, 0.14);
 }
 
 .sizeHeader {
@@ -96,7 +96,7 @@
 
   padding: 0;
 
-  color: rgba(16, 19, 23, 0.5);
+  color: rgba(10, 10, 11, 0.5);
 
   font-size: 8px;
   font-weight: 500;
@@ -117,9 +117,9 @@
 .size {
   min-height: 48px;
 
-  border: 1px solid rgba(16, 19, 23, 0.18);
+  border: 1px solid rgba(10, 10, 11, 0.18);
 
-  color: #101317;
+  color: #0a0a0b;
   background: transparent;
 
   font-size: 9px;
@@ -135,13 +135,13 @@
 }
 
 .size:hover {
-  border-color: #101317;
+  border-color: #0a0a0b;
 }
 
 .sizeSelected {
-  border-color: #101317;
-  background: #101317;
-  color: #f5f5f2;
+  border-color: #0a0a0b;
+  background: #0a0a0b;
+  color: #ecebe6;
 }
 
 .purchaseRow {
@@ -159,7 +159,7 @@
 
   min-height: 56px;
 
-  border: 1px solid rgba(16, 19, 23, 0.18);
+  border: 1px solid rgba(10, 10, 11, 0.18);
 }
 
 .quantity button {
@@ -168,7 +168,7 @@
 
   height: 100%;
 
-  color: #101317;
+  color: #0a0a0b;
 
   cursor: pointer;
 
@@ -176,7 +176,7 @@
 }
 
 .quantity button:hover {
-  background: rgba(16, 19, 23, 0.06);
+  background: rgba(10, 10, 11, 0.06);
 }
 
 .quantity span {
@@ -196,8 +196,8 @@
 
   padding: 0 20px;
 
-  background: #101317;
-  color: #f5f5f2;
+  background: #0a0a0b;
+  color: #ecebe6;
 
   font-size: 8px;
   font-weight: 500;
@@ -216,14 +216,14 @@
 }
 
 .addButton:disabled {
-  background: rgba(16, 19, 23, 0.3);
+  background: rgba(10, 10, 11, 0.3);
   cursor: not-allowed;
 }
 
 .helper {
   margin-top: 11px;
 
-  color: rgba(16, 19, 23, 0.4);
+  color: rgba(10, 10, 11, 0.4);
   font-size: 8px;
   line-height: 1.4;
   letter-spacing: 0.08em;
@@ -232,11 +232,11 @@
 /* DETAILS */
 
 .details {
-  border-bottom: 1px solid rgba(16, 19, 23, 0.14);
+  border-bottom: 1px solid rgba(10, 10, 11, 0.14);
 }
 
 .detail {
-  border-top: 1px solid rgba(16, 19, 23, 0.14);
+  border-top: 1px solid rgba(10, 10, 11, 0.14);
 }
 
 .detail:first-child {
@@ -255,7 +255,7 @@
 
   padding: 0;
 
-  color: #101317;
+  color: #0a0a0b;
 
   font-size: 8px;
   font-weight: 500;
@@ -292,7 +292,7 @@
 
   margin: 0;
 
-  color: rgba(16, 19, 23, 0.6);
+  color: rgba(10, 10, 11, 0.6);
   font-size: 12px;
   line-height: 1.65;
 }
@@ -315,7 +315,7 @@
 
   padding-top: 20px;
 
-  color: rgba(16, 19, 23, 0.38);
+  color: rgba(10, 10, 11, 0.38);
   font-size: 7px;
   font-weight: 500;
   line-height: 1;
@@ -439,7 +439,7 @@
 .quantity button:focus-visible,
 .addButton:focus-visible,
 .detailTrigger:focus-visible {
-  outline: 1px solid #101317;
+  outline: 1px solid #0a0a0b;
   outline-offset: 3px;
 }
 

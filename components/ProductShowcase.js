@@ -2,282 +2,170 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "framer-motion";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+
+import KineticText from "@/components/ui/KineticText";
+import Reveal from "@/components/ui/Reveal";
+import TiltCard from "@/components/ui/TiltCard";
+import { getProductBySlug } from "@/lib/products";
 
 import styles from "./ProductShowcase.module.css";
 
-const products = [
-  {
-    id: "01",
-    name: "AEROFLEX TEE",
-    category: "MEN / TRAINING",
-    image: "/images/campaigns/aeroflextee.jpeg",
-    href: "/product/aeroflex-tee",
-  },
-  {
-    id: "02",
-    name: "FORM LEGGING",
-    category: "WOMEN / PERFORMANCE",
-    image: "/images/campaigns/legging.jpeg",
-    href: "/product/form-legging",
-  },
-  {
-    id: "03",
-    name: "CORE PERFORMANCE",
-    category: "MEN / PERFORMANCE",
-    image: "/images/campaigns/coreperformance.jpeg",
-    href: "/product/core-performance",
-  },
-  {
-    id: "04",
-    name: "FORM CORP",
-    category: "WOMEN / TRAINING",
-    image: "/images/campaigns/form corp.jpeg",
-    href: "/product/form-corp",
-  },
-];
+const featured = getProductBySlug("aeroflex-tee");
+const rail = ["form-legging", "core-performance", "form-corp"].map(getProductBySlug);
+
+const label = (product) => `${product.gender} / ${product.category}`;
 
 export default function ProductShowcase() {
   return (
-    <section id="products" className={styles.products}>
-      <div className={styles.inner}>
-        {/* HEADER */}
-        <motion.header
-          className={styles.header}
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.25 }}
-          transition={{
-            duration: 0.8,
-            ease: [0.16, 1, 0.3, 1],
-          }}
-        >
-          <div className={styles.meta}>
-            <span>03</span>
-            <span>PRODUCTS</span>
-            <span>SPIRIT / 2026</span>
+    <section id="products" className={`${styles.products} surface-ink`}>
+      <div className="wrap">
+        <div className="meta">
+          <span>03</span>
+          <span>PRODUCTS</span>
+          <span>THE SYSTEM</span>
+        </div>
+
+        <Reveal className={styles.header}>
+          <KineticText
+            as="h2"
+            lines={["THE PIECES", "THAT MOVE", "WITH YOU."]}
+            outline={[1]}
+            className={`display ${styles.heading}`}
+          />
+
+          <div className={styles.headerSide}>
+            <p className="reveal">
+              Refined essentials engineered for movement, performance and
+              everyday life — designed to work as one wardrobe.
+            </p>
+            <Link href="/shop" className="link-line reveal" style={{ "--rd": "120ms" }}>
+              View all products <ArrowUpRight size={14} strokeWidth={1.5} />
+            </Link>
           </div>
+        </Reveal>
 
-          <div className={styles.heading}>
-            <h2>
-              THE PIECES
-              <br />
-              THAT MOVE WITH YOU.
-            </h2>
-
-            <div className={styles.headingSide}>
-              <p>
-                Refined essentials engineered for
-                movement, performance and everyday
-                life.
-              </p>
-
-              <Link href="/shop" className={styles.shopLink}>
-                <span>VIEW ALL PRODUCTS</span>
-
-                <span className={styles.shopIcon}>
-                  <ArrowUpRight size={15} strokeWidth={1.15} />
-                </span>
-              </Link>
-            </div>
-          </div>
-        </motion.header>
-
-        {/* FEATURED PRODUCT */}
+        {/* ---------- featured ---------- */}
         <div className={styles.featured}>
-          <motion.div
-            className={styles.featuredImage}
-            initial={{
-              opacity: 0,
-              scale: 1.025,
-            }}
-            whileInView={{
-              opacity: 1,
-              scale: 1,
-            }}
-            viewport={{
-              once: true,
-              amount: 0.15,
-            }}
-            transition={{
-              duration: 1.1,
-              ease: [0.16, 1, 0.3, 1],
-            }}
-          >
-            <Link href={products[0].href}>
-              <Image
-                src={products[0].image}
-                alt={products[0].name}
-                fill
-                sizes="(max-width: 900px) 92vw, 62vw"
-              />
+          <TiltCard className={styles.featuredCard} max={5}>
+            <Link
+              href={`/product/${featured.slug}`}
+              className={styles.featuredLink}
+              data-cursor="VIEW"
+              aria-label={`View ${featured.name}`}
+            >
+              <div className={styles.featuredMedia}>
+                <Image
+                  src={featured.images[0]}
+                  alt={`${featured.name} worn in a brutalist courtyard`}
+                  fill
+                  sizes="(max-width: 900px) 92vw, 60vw"
+                  className={styles.featuredImage}
+                />
+              </div>
 
-              <div className={styles.featuredOverlay} />
+              <span className={`display ${styles.featuredNumber}`} aria-hidden="true">
+                01
+              </span>
 
               <div className={styles.featuredMeta}>
-                <span>
-                  FEATURED / {products[0].id}
-                </span>
-
-                <span>
-                  {products[0].category}
-                </span>
+                <span>Featured piece</span>
+                <span>{label(featured)}</span>
               </div>
 
-              <div className={styles.featuredBottom}>
-                <div>
-                  <span className={styles.featuredLabel}>
-                    SPIRIT ESSENTIAL
-                  </span>
-
-                  <h3>{products[0].name}</h3>
-                </div>
-
-                <span className={styles.featuredArrow}>
-                  <ArrowUpRight
-                    size={20}
-                    strokeWidth={1.1}
-                  />
-                </span>
+              <div className={styles.featuredName}>
+                <span className="display">{featured.name}</span>
               </div>
             </Link>
-          </motion.div>
+          </TiltCard>
 
-          {/* FEATURED INFO */}
-          <motion.div
-            className={styles.featuredInfo}
-            initial={{
-              opacity: 0,
-              x: 25,
-            }}
-            whileInView={{
-              opacity: 1,
-              x: 0,
-            }}
-            viewport={{
-              once: true,
-              amount: 0.2,
-            }}
-            transition={{
-              duration: 0.8,
-              delay: 0.15,
-              ease: [0.16, 1, 0.3, 1],
-            }}
-          >
-            <div className={styles.infoTop}>
-              <span>01 / 04</span>
+          <Reveal className={styles.featuredInfo}>
+            <span className="eyebrow reveal">01 — Featured</span>
+            <h3 className={`display reveal ${styles.infoName}`} style={{ "--rd": "60ms" }}>
+              {featured.name}
+            </h3>
+            <p className="reveal" style={{ "--rd": "120ms" }}>
+              {featured.description}
+            </p>
 
-              <span>
-                {products[0].category}
-              </span>
-            </div>
-
-            <div className={styles.infoMain}>
-              <span>01 — FEATURED PIECE</span>
-
-              <h3>{products[0].name}</h3>
-
-              <p>
-                Lightweight performance construction
-                designed for unrestricted movement,
-                training and everyday wear.
-              </p>
-            </div>
+            <dl className={`reveal ${styles.specs}`} style={{ "--rd": "180ms" }}>
+              <div>
+                <dt>Fit</dt>
+                <dd>{featured.fit}</dd>
+              </div>
+              <div>
+                <dt>Sizes</dt>
+                <dd className={styles.sizes}>
+                  {featured.sizes.map((size) => (
+                    <span key={size}>{size}</span>
+                  ))}
+                </dd>
+              </div>
+            </dl>
 
             <Link
-              href={products[0].href}
-              className={styles.discover}
+              href={`/product/${featured.slug}`}
+              className="btn reveal"
+              style={{ "--rd": "240ms" }}
+              data-magnetic="0.25"
             >
-              <span>DISCOVER PRODUCT</span>
-
-              <ArrowRight
-                size={17}
-                strokeWidth={1.15}
-              />
+              <span className="btn-label">Discover product</span>
+              <span className="btn-icon">
+                <ArrowUpRight size={16} strokeWidth={1.5} />
+              </span>
             </Link>
-          </motion.div>
+          </Reveal>
         </div>
 
-        {/* PRODUCT RAIL */}
-        <div className={styles.productRail}>
-          {products.slice(1).map((product, index) => (
-            <motion.article
-              key={product.id}
-              className={styles.product}
-              initial={{
-                opacity: 0,
-                y: 35,
-              }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
-              }}
-              viewport={{
-                once: true,
-                amount: 0.15,
-              }}
-              transition={{
-                duration: 0.75,
-                delay: index * 0.08,
-                ease: [0.16, 1, 0.3, 1],
-              }}
+        {/* ---------- rail ---------- */}
+        <Reveal className={styles.rail} threshold={0.1}>
+          {rail.map((product, index) => (
+            <article
+              key={product.slug}
+              className={`reveal ${styles.product}`}
+              style={{ "--rd": `${index * 110}ms` }}
             >
-              <Link
-                href={product.href}
-                className={styles.productLink}
-              >
-                <div className={styles.productImage}>
-                  <Image
-                    src={product.image}
-                    alt={product.name}
-                    fill
-                    sizes="(max-width: 900px) 92vw, 30vw"
-                  />
-
-                  <span className={styles.productNumber}>
-                    {product.id}
-                  </span>
-
-                  <span className={styles.productArrow}>
-                    <ArrowUpRight
-                      size={16}
-                      strokeWidth={1.15}
+              <TiltCard className={styles.productCard} max={7}>
+                <Link
+                  href={`/product/${product.slug}`}
+                  className={styles.productLink}
+                  data-cursor="VIEW"
+                  aria-label={`View ${product.name}`}
+                >
+                  <div className={styles.productMedia}>
+                    <Image
+                      src={product.images[0]}
+                      alt={product.name}
+                      fill
+                      sizes="(max-width: 900px) 92vw, 30vw"
+                      className={styles.productImage}
                     />
-                  </span>
-                </div>
-
-                <div className={styles.productDetails}>
-                  <div>
-                    <span>{product.category}</span>
-
-                    <h3>{product.name}</h3>
+                    {product.images[1] && (
+                      <Image
+                        src={product.images[1]}
+                        alt=""
+                        fill
+                        sizes="(max-width: 900px) 92vw, 30vw"
+                        className={styles.productAlt}
+                      />
+                    )}
                   </div>
-
-                  <span className={styles.viewProduct}>
-                    VIEW
+                  <span className={styles.productIndex}>
+                    {String(index + 2).padStart(2, "0")}
                   </span>
-                </div>
-              </Link>
-            </motion.article>
+                  <span className={styles.productArrow}>
+                    <ArrowUpRight size={16} strokeWidth={1.5} />
+                  </span>
+                </Link>
+              </TiltCard>
+
+              <div className={styles.productInfo}>
+                <span className="mono">{label(product)}</span>
+                <h3>{product.name}</h3>
+              </div>
+            </article>
           ))}
-        </div>
-
-        {/* FOOTER */}
-        <div className={styles.footer}>
-          <span>SPIRIT / PRODUCT INDEX</span>
-
-          <span>PERFORMANCE ESSENTIALS</span>
-
-          <Link href="/shop">
-            SHOP ALL
-
-            <ArrowUpRight
-              size={13}
-              strokeWidth={1.15}
-            />
-          </Link>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

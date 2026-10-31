@@ -6,6 +6,7 @@ import ProductGallery from "@/components/ProductGallery";
 import ProductInfo from "@/components/ProductInfo";
 import WishlistButton from "@/components/WishlistButton";
 import ProductCard from "@/components/ProductCard";
+import CtaBand from "@/components/CtaBand";
 import {
   products as allProducts,
   getProductBySlug,
@@ -55,94 +56,63 @@ export default async function ProductPage({ params }) {
 
   return (
     <main className={styles.product}>
-      {/* HEADER */}
-
-      <header className={styles.header}>
-        <div className={styles.headerMeta}>
-          <span>01</span>
-          <span>SPIRIT / PRODUCT</span>
-          <span>2026</span>
-        </div>
-
-        <Link href="/shop" className={styles.backLink}>
-          <ArrowLeft size={14} strokeWidth={1.1} />
-          <span>BACK TO SHOP</span>
-        </Link>
-      </header>
-
-      {/* PRODUCT */}
-
-      <section className={styles.productSection}>
-        <div className={styles.gallery}>
-          <ProductGallery
-            images={product.images}
-            productName={product.name}
-          />
-        </div>
-
-        <div className={styles.info}>
-          <div className={styles.infoActions}>
-            <WishlistButton
-              product={product}
-              size="medium"
-            />
+      <section className={`${styles.detail} surface-bone`}>
+        <div className="wrap">
+          <div className={styles.crumbs}>
+            <Link href="/shop" className={styles.back}>
+              <ArrowLeft size={14} strokeWidth={1.5} />
+              Back to shop
+            </Link>
+            <span className={styles.trail}>
+              Shop / {product.gender} / {product.category}
+            </span>
           </div>
 
-          <ProductInfo product={product} />
+          <div className={styles.layout}>
+            <div className={styles.gallery}>
+              <ProductGallery images={product.images} productName={product.name} />
+            </div>
+
+            <div className={styles.info}>
+              <div className={styles.infoActions}>
+                <WishlistButton product={product} size="medium" />
+              </div>
+              <ProductInfo product={product} />
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* RELATED */}
+      <section className={`${styles.related} surface-ink`} aria-label="Related products">
+        <div className="wrap">
+          <div className="meta">
+            <span>02</span>
+            <span>Complete the system</span>
+            <span>SPIRIT / 2026</span>
+          </div>
 
-      <section
-        className={styles.related}
-        aria-label="Related products"
-      >
-        <div className={styles.relatedHeader}>
-          <span>02</span>
-          <span>COMPLETE THE SYSTEM</span>
-          <span>SPIRIT / 2026</span>
-        </div>
-
-        <div className={styles.relatedGrid}>
-          {related.map((item, index) => (
-            <ProductCard
-              key={item.slug}
-              product={{
-                ...item,
-                number: String(index + 1).padStart(2, "0"),
-              }}
-            />
-          ))}
-        </div>
-      </section>
-
-      {/* STATEMENT */}
-
-      <section className={styles.statement}>
-        <div className={styles.statementMeta}>
-          <span>03</span>
-          <span>SPIRIT / PRODUCT</span>
-          <span>2026</span>
-        </div>
-
-        <div className={styles.statementContent}>
-          <h2>
-            DESIGNED
+          <h2 className={`display ${styles.relatedTitle}`}>
+            Complete
             <br />
-            FOR
-            <br />
-            MOVEMENT.
+            the system.
           </h2>
 
-          <p>
-            Every SPIRIT piece begins with the body
-            in motion — considered construction,
-            restrained detail and a wardrobe that
-            works as one system.
-          </p>
+          <div className={styles.relatedGrid}>
+            {related.map((item, index) => (
+              <ProductCard key={item.slug} product={item} index={index} />
+            ))}
+          </div>
         </div>
       </section>
+
+      <CtaBand
+        index="03"
+        label="SPIRIT / Product"
+        title={["DESIGNED", "FOR MOVEMENT."]}
+        copy="Every SPIRIT piece begins with the body in motion — considered construction, restrained detail and a wardrobe that works as one system."
+        href="/shop"
+        cta="Continue shopping"
+      />
     </main>
   );
 }

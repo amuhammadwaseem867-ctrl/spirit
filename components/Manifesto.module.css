@@ -1,336 +1,123 @@
 .manifesto {
   position: relative;
-
-  width: 100%;
-  min-height: 100svh;
-
-  display: flex;
-  align-items: center;
-
+  padding-top: clamp(72px, 10vw, 160px);
   overflow: hidden;
-
-  background: #f5f5f2;
-  color: #0a0a0a;
-}
-
-.inner {
-  width: 100%;
-
-  padding: 12vh 7vw 9vh;
-}
-
-/* =========================
-   META
-========================= */
-
-.meta {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-
-  padding-bottom: 24px;
-
-  border-bottom: 1px solid rgba(10, 10, 10, 0.14);
-
-  color: rgba(10, 10, 10, 0.48);
-
-  font-size: 8px;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  line-height: 1;
-
-  text-transform: uppercase;
-}
-
-.meta span:nth-child(2) {
-  color: rgba(10, 10, 10, 0.75);
-}
-
-.meta span:last-child {
-  justify-self: end;
-}
-
-/* =========================
-   STATEMENT
-========================= */
-
-.statement {
-  padding: 11vh 0 10vh;
 }
 
 .intro {
-  max-width: 460px;
-
-  margin: 0 0 8vh;
-
-  color: rgba(10, 10, 10, 0.58);
-
-  font-size: clamp(16px, 1.4vw, 21px);
-  font-weight: 400;
-  letter-spacing: -0.015em;
-  line-height: 1.45;
+  display: grid;
+  grid-template-columns: minmax(160px, 1fr) minmax(0, 3fr);
+  gap: 32px;
+  padding-top: clamp(40px, 6vw, 96px);
 }
 
-/* =========================
-   LARGE TYPE
-========================= */
-
-.mainText {
-  display: flex;
-  flex-direction: column;
-
-  width: max-content;
-  max-width: 100%;
-
-  font-size: clamp(76px, 13.2vw, 210px);
-  font-weight: 600;
-
-  letter-spacing: -0.055em;
-  line-height: 0.8;
-
-  text-transform: uppercase;
+.eyebrow {
+  color: var(--fg-dark-muted);
+  padding-top: 0.9em;
 }
 
-.mainText > span,
-.mainText > div {
-  display: block;
+.statement {
+  max-width: 24ch;
+  font-family: var(--font-display);
+  font-size: clamp(30px, 3.9vw, 72px);
+  font-weight: 500;
+  font-stretch: 100%;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  color: var(--bone);
 }
 
-/* =========================
-   PROMINENT STROKE WORD
-========================= */
+/* ---------- 3D words ---------- */
 
-.strokeWord {
+.words {
   position: relative;
-
-  width: max-content;
-
-  /*
-   * Keeps the StrokeText visually dominant.
-   * No opacity or filter is applied here.
-   */
-  opacity: 1;
-
-  transform-origin: left center;
+  padding-block: clamp(60px, 10vw, 180px);
 }
 
-.strokeWord > * {
-  opacity: 1 !important;
+.stage {
+  display: grid;
+  justify-items: center;
+  perspective: 900px;
+  perspective-origin: 50% 120%;
 }
 
-/* =========================
-   BOTTOM
-========================= */
+.word {
+  display: block;
+  font-size: clamp(76px, 19vw, 360px);
+  line-height: 0.8;
+  transform-origin: 50% 100%;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.outline {
+  color: transparent;
+  -webkit-text-stroke: max(1px, 0.008em) var(--bone);
+}
+
+/* ---------- bottom ---------- */
 
 .bottom {
   display: grid;
-
-  grid-template-columns:
-    minmax(260px, 1fr)
-    minmax(120px, 0.65fr)
-    auto
-    auto;
-
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: clamp(32px, 6vw, 120px);
   align-items: end;
-
-  gap: 30px;
-
-  padding-top: 25px;
-
-  border-top: 1px solid rgba(10, 10, 10, 0.14);
+  padding-bottom: clamp(56px, 7vw, 110px);
 }
 
-.bottom p {
-  margin: 0;
-
-  color: rgba(10, 10, 10, 0.55);
-
-  font-size: 11px;
-  font-weight: 400;
-  letter-spacing: 0;
-  line-height: 1.65;
+.copy {
+  max-width: 44ch;
+  font-size: clamp(16px, 1.25vw, 20px);
+  line-height: 1.55;
+  color: var(--fg-dark-muted);
 }
 
-.divider {
-  width: 100%;
-  height: 1px;
-
-  margin-bottom: 5px;
-
-  background: rgba(10, 10, 10, 0.18);
+.facts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--line-dark);
 }
 
-.location,
-.year {
-  color: rgba(10, 10, 10, 0.45);
-
-  font-size: 8px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  line-height: 1;
-
-  white-space: nowrap;
+.facts > div {
+  display: grid;
+  gap: 10px;
+  padding: 18px 16px 0 0;
 }
 
-.year {
-  color: rgba(10, 10, 10, 0.55);
+.facts .mono {
+  color: var(--fg-dark-faint);
 }
 
-/* =========================
-   LARGE DESKTOP
-========================= */
-
-@media (min-width: 1600px) {
-  .inner {
-    padding-left: 6vw;
-    padding-right: 6vw;
-  }
-
-  .statement {
-    padding-top: 13vh;
-    padding-bottom: 12vh;
-  }
-
-  .mainText {
-    font-size: clamp(150px, 12.5vw, 230px);
-  }
+.facts strong {
+  font-size: 15px;
+  font-weight: 500;
 }
 
-/* =========================
-   TABLET
-========================= */
-
-@media (max-width: 1100px) {
-  .inner {
-    padding: 11vh 6vw 8vh;
-  }
-
-  .statement {
-    padding: 10vh 0 9vh;
-  }
-
-  .bottom {
-    grid-template-columns: 1fr auto auto;
-  }
-
-  .divider {
-    display: none;
-  }
+.marquee {
+  padding-block: 22px;
+  border-block: 1px solid var(--line-dark);
+  font-size: clamp(44px, 7vw, 120px);
+  color: var(--bone);
 }
 
-/* =========================
-   SMALL TABLET
-========================= */
-
-@media (max-width: 800px) {
-  .meta {
-    grid-template-columns: 1fr auto;
-  }
-
-  .meta span:nth-child(2) {
-    display: none;
-  }
-
-  .mainText {
-    font-size: clamp(70px, 15vw, 120px);
-  }
-
-  .bottom {
-    grid-template-columns: 1fr auto;
-
-    gap: 22px;
-  }
-
-  .location {
-    display: none;
-  }
-}
-
-/* =========================
-   MOBILE
-========================= */
-
-@media (max-width: 600px) {
-  .manifesto {
-    min-height: auto;
-  }
-
-  .inner {
-    padding: 88px 20px 68px;
-  }
-
-  .meta {
-    padding-bottom: 19px;
-
-    font-size: 7px;
-    letter-spacing: 0.13em;
-  }
-
-  .statement {
-    padding: 78px 0 72px;
-  }
-
-  .intro {
-    margin-bottom: 58px;
-
-    font-size: 15px;
-    line-height: 1.5;
-  }
-
-  .mainText {
-    width: 100%;
-
-    font-size: clamp(58px, 18vw, 104px);
-
-    letter-spacing: -0.045em;
-    line-height: 0.83;
-  }
-
-  .strokeWord {
-    width: max-content;
-  }
-
+@media (max-width: 900px) {
+  .intro,
   .bottom {
     grid-template-columns: 1fr;
-
-    gap: 22px;
   }
 
-  .bottom p {
-    font-size: 10.5px;
-    line-height: 1.65;
+  .facts {
+    grid-template-columns: 1fr 1fr 1fr;
   }
 
-  .year {
-    font-size: 7px;
+  .facts strong {
+    font-size: 13px;
   }
 }
-
-/* =========================
-   SMALL MOBILE
-========================= */
-
-@media (max-width: 380px) {
-  .inner {
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-
-  .statement {
-    padding-top: 70px;
-  }
-
-  .mainText {
-    font-size: 17vw;
-  }
-}
-
-/* =========================
-   REDUCED MOTION
-========================= */
 
 @media (prefers-reduced-motion: reduce) {
-  .strokeWord {
+  .word {
     transform: none !important;
+    opacity: 1 !important;
   }
 }

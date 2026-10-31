@@ -1,366 +1,136 @@
 "use client";
 
+import { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import { useRef } from "react";
 
-import StrokeText from "@/components/StrokeText";
+import KineticText from "@/components/ui/KineticText";
+import ScrubText from "@/components/ui/ScrubText";
+
 import styles from "./Editorial.module.css";
 
-const editorialStories = [
+const stories = [
   {
     number: "01",
-    category: "CAMPAIGN / 001",
+    category: "Campaign / 001",
     title: "FORM IN MOTION",
     image: "/images/campaigns/aeroflextee.jpeg",
-    href: "/story/form-in-motion",
+    alt: "Athlete standing in a brutalist courtyard",
   },
   {
     number: "02",
-    category: "CAMPAIGN / 002",
+    category: "Campaign / 002",
     title: "THE DAILY ATHLETE",
     image: "/images/campaigns/legging.jpeg",
-    href: "/story/the-daily-athlete",
+    alt: "Athlete walking along a concrete corridor",
   },
   {
     number: "03",
-    category: "CULTURE / 003",
+    category: "Culture / 003",
     title: "BUILT FOR THE PACE",
     image: "/images/campaigns/form corp.jpeg",
-    href: "/story/built-for-the-pace",
+    alt: "Athlete striding past concrete and glass",
   },
 ];
 
-export default function Editorial() {
-  const sectionRef = useRef(null);
-
+/*
+ * The frame starts tipped back (rotateX) and scaled down, then
+ * stands up flat as it reaches the middle of the viewport — like a
+ * print being lifted off a table toward the reader.
+ */
+function RiseFrame({ story, featured = false, sizes }) {
+  const ref = useRef(null);
   const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
+    target: ref,
+    offset: ["start end", "center 0.55"],
   });
 
-  const imageY = useTransform(
-    scrollYProgress,
-    [0, 1],
-    ["-5%", "5%"]
-  );
+  const rotateX = useTransform(scrollYProgress, [0, 1], [featured ? 28 : 22, 0]);
+  const scale = useTransform(scrollYProgress, [0, 1], [featured ? 0.82 : 0.88, 1]);
+  const y = useTransform(scrollYProgress, [0, 1], ["8%", "0%"]);
+  const imageScale = useTransform(scrollYProgress, [0, 1], [1.25, 1.02]);
 
   return (
-    <section
-      ref={sectionRef}
-      className={styles.editorial}
-      id="editorial"
-    >
-      <div className={styles.inner}>
-
-        {/* =========================
-            HEADER
-        ========================= */}
-
-        <motion.header
-          className={styles.header}
-          initial={{
-            opacity: 0,
-            y: 40,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          viewport={{
-            once: true,
-            amount: 0.25,
-          }}
-          transition={{
-            duration: 0.9,
-            ease: [0.16, 1, 0.3, 1],
-          }}
+    <div ref={ref} className={styles.riseWrap}>
+      <motion.div
+        className={`${styles.frame} ${featured ? styles.frameFeatured : ""}`}
+        style={{ rotateX, scale, y }}
+      >
+        <Link
+          href="/story"
+          className={styles.frameLink}
+          data-cursor="READ"
+          aria-label={`Read ${story.title}`}
         >
-          <div className={styles.meta}>
-            <span>06</span>
+          <motion.div className={styles.frameMedia} style={{ scale: imageScale }}>
+            <Image src={story.image} alt={story.alt} fill sizes={sizes} className={styles.image} />
+          </motion.div>
 
-            <span>
-              EDITORIAL / CULTURE
-            </span>
-
-            <span>
-              SPIRIT / 2026
-            </span>
+          <div className={styles.frameTop}>
+            <span>{story.category}</span>
+            <span>{story.number}</span>
           </div>
 
-          <div className={styles.headerContent}>
-            <div className={styles.headerLabel}>
-              <span className={styles.labelLine} />
-
-              <span>
-                THE SPIRIT EDIT
-              </span>
-            </div>
-
-            <h2>
-              MOVEMENT,
-              <br />
-
-              <StrokeText
-                color="#101317"
-                strokeColor="rgba(16, 19, 23, 0.9)"
-                strokeWidth={1}
-              >
-                BEYOND PERFORMANCE.
-              </StrokeText>
-            </h2>
-
-            <p>
-              Stories, people and perspectives
-              surrounding the active life.
-            </p>
+          <div className={styles.frameBottom}>
+            <span className={`display ${featured ? styles.featuredTitle : styles.storyTitle}`}>
+              {story.title}
+            </span>
+            <span className={styles.frameIcon}>
+              <ArrowUpRight size={18} strokeWidth={1.5} />
+            </span>
           </div>
-        </motion.header>
+        </Link>
+      </motion.div>
+    </div>
+  );
+}
 
-        {/* =========================
-            FEATURED STORY
-        ========================= */}
+export default function Editorial() {
+  return (
+    <section id="editorial" className={`${styles.editorial} surface-ink`}>
+      <div className="wrap">
+        <div className="meta">
+          <span>08</span>
+          <span>EDITORIAL / CULTURE</span>
+          <span>THE SPIRIT EDIT</span>
+        </div>
 
-        <motion.article
-          className={styles.featured}
-          initial={{
-            opacity: 0,
-            y: 50,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          viewport={{
-            once: true,
-            amount: 0.2,
-          }}
-          transition={{
-            duration: 1,
-            ease: [0.16, 1, 0.3, 1],
-          }}
-        >
-          <Link
-            href={editorialStories[0].href}
-            className={styles.featuredLink}
-          >
-            <div className={styles.featuredImage}>
-              <motion.img
-                src={editorialStories[0].image}
-                alt={editorialStories[0].title}
-                style={{
-                  y: imageY,
-                }}
-                loading="lazy"
-                decoding="async"
-              />
+        <div className={styles.header}>
+          <KineticText
+            as="h2"
+            lines={["MOVEMENT,", "BEYOND", "PERFORMANCE."]}
+            outline={[1]}
+            className={`display ${styles.heading}`}
+          />
+          <p className={styles.headerCopy}>
+            Stories, people and perspectives surrounding the active life.
+          </p>
+        </div>
 
-              <div className={styles.featuredOverlay} />
-
-              <div className={styles.featuredTop}>
-                <span>
-                  {editorialStories[0].category}
-                </span>
-
-                <span>
-                  {editorialStories[0].number}
-                </span>
-              </div>
-
-              <div className={styles.featuredBottom}>
-                <div>
-                  <span
-                    className={styles.featuredEyebrow}
-                  >
-                    SPIRIT / EDITORIAL
-                  </span>
-
-                  <h3>
-                    {editorialStories[0].title}
-                  </h3>
-                </div>
-
-                <span
-                  className={styles.featuredArrow}
-                >
-                  <ArrowUpRight
-                    size={22}
-                    strokeWidth={1.15}
-                  />
-                </span>
-              </div>
-            </div>
-          </Link>
-        </motion.article>
-
-        {/* =========================
-            INTRO
-        ========================= */}
+        <RiseFrame story={stories[0]} featured sizes="92vw" />
 
         <div className={styles.intro}>
-          <motion.span
-            initial={{
-              opacity: 0,
-              x: -20,
-            }}
-            whileInView={{
-              opacity: 1,
-              x: 0,
-            }}
-            viewport={{
-              once: true,
-            }}
-            transition={{
-              duration: 0.7,
-            }}
-          >
-            EDITORIAL / 001
-          </motion.span>
-
-          <motion.p
-            initial={{
-              opacity: 0,
-              y: 30,
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-            }}
-            viewport={{
-              once: true,
-              amount: 0.4,
-            }}
-            transition={{
-              duration: 0.85,
-              ease: [0.16, 1, 0.3, 1],
-            }}
-          >
-            Movement is more than performance.
-            It is how we travel, work, train,
-            recover and exist. SPIRIT explores
-            the space between athletic purpose
-            and everyday life.
-          </motion.p>
+          <span className="eyebrow">Editorial / 001</span>
+          <ScrubText
+            className={styles.introText}
+            text="Movement is more than performance. It is how we travel, work, train, recover and exist. SPIRIT explores the space between athletic purpose and everyday life."
+          />
         </div>
 
-        {/* =========================
-            STORY GRID
-        ========================= */}
-
-        <div className={styles.storyGrid}>
-          {editorialStories.slice(1).map(
-            (story, index) => (
-              <motion.article
-                key={story.number}
-                className={styles.story}
-                initial={{
-                  opacity: 0,
-                  y: 45,
-                }}
-                whileInView={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                viewport={{
-                  once: true,
-                  amount: 0.2,
-                }}
-                transition={{
-                  duration: 0.8,
-                  delay: index * 0.12,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-              >
-                <Link
-                  href={story.href}
-                  className={styles.storyLink}
-                >
-                  <div className={styles.storyImage}>
-                    <Image
-                      src={story.image}
-                      alt={story.title}
-                      fill
-                      sizes="(max-width: 900px) 92vw, 50vw"
-                    />
-
-                    <div className={styles.storyOverlay} />
-
-                    <span
-                      className={styles.storyNumber}
-                    >
-                      {story.number}
-                    </span>
-
-                    <span
-                      className={styles.storyArrow}
-                    >
-                      <ArrowUpRight
-                        size={18}
-                        strokeWidth={1.15}
-                      />
-                    </span>
-                  </div>
-
-                  <div className={styles.storyInfo}>
-                    <div>
-                      <span>
-                        {story.category}
-                      </span>
-
-                      <h3>
-                        {story.title}
-                      </h3>
-                    </div>
-
-                    <span className={styles.read}>
-                      READ
-                    </span>
-                  </div>
-                </Link>
-              </motion.article>
-            )
-          )}
+        <div className={styles.grid}>
+          {stories.slice(1).map((story) => (
+            <RiseFrame key={story.number} story={story} sizes="(max-width: 900px) 92vw, 46vw" />
+          ))}
         </div>
 
-        {/* =========================
-            FOOTER
-        ========================= */}
-
-        <motion.div
-          className={styles.footer}
-          initial={{
-            opacity: 0,
-          }}
-          whileInView={{
-            opacity: 1,
-          }}
-          viewport={{
-            once: true,
-          }}
-          transition={{
-            duration: 0.8,
-          }}
-        >
-          <span>
-            SPIRIT / EDITORIAL INDEX
-          </span>
-
-          <span>
-            STORIES / CULTURE / MOVEMENT
-          </span>
-
-          <Link href="/story">
-            VIEW ALL STORIES
-
-            <ArrowUpRight
-              size={14}
-              strokeWidth={1.15}
-            />
+        <div className={styles.footer}>
+          <span className="mono">Stories / culture / movement</span>
+          <Link href="/story" className="link-line">
+            View all stories <ArrowUpRight size={14} strokeWidth={1.5} />
           </Link>
-        </motion.div>
-
+        </div>
       </div>
     </section>
   );

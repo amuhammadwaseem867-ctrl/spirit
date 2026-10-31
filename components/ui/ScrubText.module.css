@@ -1,0 +1,13 @@
+.scrub {
+  margin: 0;
+}
+
+.word {
+  white-space: pre-wrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .word {
+    opacity: 1 !important;
+  }
+}

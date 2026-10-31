@@ -1,706 +1,395 @@
+/* =========================================================
+   HERO — pinned 3D stage
+   The section is taller than the viewport; the stage sticks
+   while the scroll progress drives the camera move.
+========================================================= */
+
 .hero {
   position: relative;
-  width: 100%;
+  height: 240vh;
+  height: 240svh;
+}
+
+.stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
   height: 100svh;
-  min-height: 680px;
-
-  overflow: hidden;
-
-  background: #090909;
-  color: #f5f5f2;
-}
-
-/* =========================
-   IMAGE STAGE
-========================= */
-
-.imageStage {
-  position: absolute;
-  inset: 0;
-
-  overflow: hidden;
-
-  background: #111;
-}
-
-.slide {
-  position: absolute;
-  inset: 0;
-
   overflow: hidden;
 }
 
-.imageMotion {
-  position: absolute;
-  inset: 0;
-
-  will-change: transform;
+.gl {
+  z-index: 0;
 }
 
-.image {
+.fallback {
+  position: absolute;
+  top: 12%;
+  right: 8%;
+  bottom: 12%;
+  width: min(34vw, 560px);
+}
+
+.fallbackImage {
   object-fit: cover;
-  object-position: center;
-
-  user-select: none;
-  -webkit-user-drag: none;
+  filter: saturate(0.85) contrast(1.05);
 }
 
-/* =========================
-   IMAGE OVERLAY
-========================= */
-
-.imageOverlay {
-  position: absolute;
-  inset: 0;
-
-  pointer-events: none;
-
-  background:
-    linear-gradient(
-      90deg,
-      rgba(0, 0, 0, 0.58) 0%,
-      rgba(0, 0, 0, 0.28) 30%,
-      rgba(0, 0, 0, 0.06) 64%,
-      rgba(0, 0, 0, 0.2) 100%
-    ),
-    linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0.26) 0%,
-      transparent 30%,
-      transparent 65%,
-      rgba(0, 0, 0, 0.5) 100%
-    );
-}
-
-/* =========================
-   HERO INNER
-========================= */
-
-.heroInner {
+.inner {
   position: relative;
-  z-index: 5;
-
-  width: min(calc(100% - 64px), 1800px);
+  z-index: 1;
+  display: grid;
+  grid-template-rows: auto 1fr auto auto;
   height: 100%;
-
-  margin: 0 auto;
-  padding: 116px 0 30px;
-
-  display: flex;
-  flex-direction: column;
+  padding-top: calc(var(--nav-h) + 18px);
+  padding-bottom: clamp(20px, 3.4vh, 40px);
 }
 
-/* =========================
-   TOP META
-========================= */
+/* ---------- top line ---------- */
 
-.topMeta {
+.top {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-
-  color: rgba(245, 245, 242, 0.75);
-
-  font-size: 8px;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  line-height: 1;
-
-  text-transform: uppercase;
-}
-
-.topMeta > span:last-child {
-  justify-self: end;
-}
-
-.topCenter {
-  color: rgba(245, 245, 242, 0.42);
-}
-
-/* =========================
-   MAIN CONTENT
-========================= */
-
-.mainContent {
-  flex: 1;
-
-  display: flex;
-  align-items: center;
-}
-
-.copy {
-  width: min(760px, 72vw);
-
-  margin-top: 4vh;
-}
-
-.eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-
-  margin-bottom: 24px;
-
-  color: rgba(245, 245, 242, 0.76);
-
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  line-height: 1;
-
-  text-transform: uppercase;
-}
-
-.eyebrow > span {
-  width: 30px;
-  height: 1px;
-
-  background: rgba(245, 245, 242, 0.72);
-}
-
-.copy h1 {
-  max-width: 900px;
-
-  margin: 0;
-
-  font-size: clamp(58px, 9vw, 148px);
+  gap: 24px;
+  padding-block: 14px;
+  border-top: 1px solid var(--line-dark);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
   font-weight: 500;
-  letter-spacing: -0.075em;
-  line-height: 0.82;
+  letter-spacing: 0.16em;
+  color: var(--fg-dark-muted);
 }
 
-.copy p {
-  max-width: 380px;
-
-  margin: 30px 0 0;
-
-  color: rgba(245, 245, 242, 0.68);
-
-  font-size: 13px;
-  font-weight: 400;
-  letter-spacing: -0.01em;
-  line-height: 1.6;
-}
-
-/* =========================
-   EXPLORE
-========================= */
-
-.explore {
-  width: fit-content;
-
+.topIndex {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-
-  margin-top: 32px;
-
-  color: #f5f5f2;
-  text-decoration: none;
-
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  line-height: 1;
-
-  text-transform: uppercase;
+  color: var(--bone);
 }
 
-.explore > span:first-child {
-  position: relative;
+.topRight {
+  text-align: right;
 }
 
-.explore > span:first-child::after {
-  content: "";
+/* ---------- headline ---------- */
 
-  position: absolute;
-  left: 0;
-  bottom: -7px;
-
-  width: 100%;
-  height: 1px;
-
-  background: currentColor;
-
-  transform-origin: right;
-  transform: scaleX(1);
-
-  transition:
-    transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+.headline {
+  align-self: end;
+  padding-bottom: clamp(18px, 3vh, 36px);
+  pointer-events: none;
 }
 
-.explore:hover > span:first-child::after {
-  transform-origin: left;
-  transform: scaleX(0);
+.title {
+  font-size: clamp(54px, 8.4vw, 168px);
+  font-stretch: 112%;
+  line-height: 0.84;
+  letter-spacing: -0.04em;
+  color: var(--bone);
+  text-shadow: 0 0.02em 0.4em rgba(0, 0, 0, 0.25);
 }
 
-.exploreIcon {
-  width: 30px;
-  height: 30px;
+.titleIndent {
+  padding-left: 0.62em;
+}
 
+/* ---------- bottom row ---------- */
+
+.bottom {
   display: grid;
-  place-items: center;
-
-  border: 1px solid rgba(245, 245, 242, 0.42);
-  border-radius: 50%;
-
-  transition:
-    background 250ms ease,
-    color 250ms ease,
-    transform 350ms cubic-bezier(0.16, 1, 0.3, 1);
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 32px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line-dark);
 }
 
-.explore:hover .exploreIcon {
-  background: #f5f5f2;
-  color: #111;
-
-  transform: translate(3px, -3px);
-}
-
-/* =========================
-   BOTTOM BAR
-========================= */
-
-.bottomBar {
+.copy {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-
-  min-height: 48px;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px 40px;
 }
 
-.scrollHint {
+.caption {
+  max-width: 34ch;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--fg-dark-muted);
+  animation: captionIn 0.9s var(--ease-out) both;
+}
+
+@keyframes captionIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.actions {
   display: flex;
   align-items: center;
-  gap: 10px;
-
-  color: rgba(245, 245, 242, 0.52);
-
-  font-size: 8px;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-
-  text-transform: uppercase;
+  gap: 28px;
 }
 
-.scrollHint svg {
-  animation: scrollDown 2.4s ease-in-out infinite;
-}
-
-@keyframes scrollDown {
-  0%,
-  100% {
-    transform: translateY(0);
-    opacity: 0.45;
-  }
-
-  50% {
-    transform: translateY(4px);
-    opacity: 1;
-  }
-}
-
-/* =========================
-   CONTROLS
-========================= */
+/* ---------- slide controls ---------- */
 
 .controls {
   display: flex;
   align-items: center;
-  gap: 26px;
+  gap: 28px;
 }
-
-.counter {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-}
-
-.counter i {
-  color: rgba(245, 245, 242, 0.3);
-  font-style: normal;
-}
-
-/* =========================
-   PROGRESS
-========================= */
 
 .progress {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
-.progressButton {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-
-  padding: 5px 0;
-
-  border: 0;
-
-  background: transparent;
-  color: rgba(245, 245, 242, 0.4);
-
-  font-family: inherit;
-  font-size: 7px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-
-  cursor: pointer;
+.track {
+  display: grid;
+  gap: 10px;
+  min-width: 48px;
+  min-height: 44px;
+  padding-top: 8px;
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--fg-dark-faint);
+  transition: color 0.4s var(--ease-out);
 }
 
-.progressButton:hover {
-  color: rgba(245, 245, 242, 0.8);
+.track[data-active="true"] {
+  color: var(--bone);
 }
 
-.progressNumber {
-  line-height: 1;
-}
-
-.progressTrack {
+.trackBar {
   position: relative;
-
-  width: 0;
+  display: block;
+  width: clamp(36px, 4vw, 64px);
   height: 1px;
-
   overflow: hidden;
-
-  background: rgba(245, 245, 242, 0.28);
-
-  transition:
-    width 350ms cubic-bezier(0.16, 1, 0.3, 1);
+  background: var(--line-dark-strong);
 }
 
-.activeProgress {
-  color: #f5f5f2;
-}
-
-.activeProgress .progressTrack {
-  width: 44px;
-}
-
-.progressFill {
+.trackFill {
   position: absolute;
   inset: 0;
-
-  background: #f5f5f2;
-
-  transform: translateX(-100%);
+  background: var(--bone);
+  transform: scaleX(0);
+  transform-origin: left;
 }
 
-.activeProgress .progressFill {
-  animation: fillProgress 5.5s linear forwards;
+.track[data-done="true"] .trackFill,
+.track[data-active="true"] .trackFill {
+  transform: scaleX(1);
 }
 
-@keyframes fillProgress {
+.track[data-running="true"] .trackFill {
+  animation: trackRun var(--dur) linear both;
+  background: var(--signal);
+}
+
+@keyframes trackRun {
   from {
-    transform: translateX(-100%);
+    transform: scaleX(0);
   }
-
   to {
-    transform: translateX(0);
+    transform: scaleX(1);
   }
 }
 
-/* =========================
-   ARROWS
-========================= */
-
-.arrows {
+.buttons {
   display: flex;
-  align-items: center;
-  gap: 5px;
+  gap: 8px;
 }
 
-.arrows button {
-  width: 36px;
-  height: 36px;
-
+.buttons button {
   display: grid;
   place-items: center;
-
-  padding: 0;
-
-  border: 1px solid rgba(245, 245, 242, 0.25);
+  width: 46px;
+  height: 46px;
+  border: 1px solid var(--line-dark-strong);
   border-radius: 50%;
-
-  background: transparent;
-  color: #f5f5f2;
-
-  cursor: pointer;
-
+  color: var(--bone);
   transition:
-    background 220ms ease,
-    color 220ms ease,
-    border-color 220ms ease,
-    transform 300ms ease;
+    background-color 0.4s var(--ease-out),
+    color 0.4s var(--ease-out),
+    border-color 0.4s var(--ease-out);
 }
 
-.arrows button:hover {
-  border-color: #f5f5f2;
-
-  background: #f5f5f2;
-  color: #111;
+@media (hover: hover) {
+  .buttons button:hover {
+    background: var(--bone);
+    border-color: var(--bone);
+    color: var(--ink);
+  }
 }
 
-.arrows button:first-child:hover {
-  transform: translateX(-2px);
-}
+/* ---------- scroll cue + side label ---------- */
 
-.arrows button:last-child:hover {
-  transform: translateX(2px);
-}
-
-/* =========================
-   SIDE LABEL
-========================= */
-
-.sideLabel {
+.scrollCue {
   position: absolute;
-  z-index: 5;
+  left: 50%;
+  bottom: clamp(108px, 15vh, 150px);
+  display: none;
+}
 
+.scrollLine {
+  display: block;
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(var(--bone), transparent);
+  animation: scrollLine 2.4s var(--ease-in-out) infinite;
+  transform-origin: top;
+}
+
+@keyframes scrollLine {
+  0% { transform: scaleY(0); }
+  50% { transform: scaleY(1); transform-origin: top; }
+  51% { transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+.side {
+  position: absolute;
   top: 50%;
-  right: 20px;
-
+  right: calc(var(--gutter) * 0.42);
   display: flex;
   align-items: center;
-  gap: 7px;
-
-  color: rgba(245, 245, 242, 0.36);
-
-  font-size: 7px;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-
-  transform: rotate(90deg) translateX(50%);
-  transform-origin: right center;
+  gap: 14px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.22em;
+  color: var(--fg-dark-faint);
+  writing-mode: vertical-rl;
+  transform: translateY(-50%) rotate(180deg);
 }
 
-.sideLabel b {
-  font-weight: 400;
-  opacity: 0.5;
+.side i {
+  width: 1px;
+  height: 22px;
+  background: var(--line-dark-strong);
 }
 
-/* =========================
-   TABLET
-========================= */
+/* ---------- outro ---------- */
+
+.outro {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 18px;
+  pointer-events: none;
+  color: var(--bone);
+  text-align: center;
+}
+
+.outroWord {
+  font-size: clamp(64px, 15vw, 280px);
+  line-height: 0.8;
+}
+
+/* ---------- intro states ---------- */
+
+.hero[data-intro="false"] .top > *,
+.hero[data-intro="false"] .bottom > * {
+  opacity: 0;
+}
+
+/* intro fade lives on the children so it never fights the
+   scroll-driven opacity set on the rows themselves */
+.top > *,
+.bottom > * {
+  transition: opacity 1.2s var(--ease-out) 0.5s;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
 
 @media (max-width: 1100px) {
-  .heroInner {
-    width: min(calc(100% - 48px), 1800px);
-  }
-
-  .copy h1 {
-    font-size: clamp(58px, 10vw, 112px);
+  .bottom {
+    grid-template-columns: 1fr;
   }
 
   .controls {
-    gap: 18px;
-  }
-
-  .progress {
-    gap: 8px;
-  }
-
-  .sideLabel {
-    display: none;
+    justify-content: space-between;
   }
 }
 
-/* =========================
-   MOBILE
-========================= */
-
-@media (max-width: 850px) {
+@media (max-width: 900px) and (orientation: portrait), (max-width: 640px) {
   .hero {
-    min-height: 620px;
+    height: 190vh;
+    height: 190svh;
   }
 
-  .imageOverlay {
-    background:
-      linear-gradient(
-        180deg,
-        rgba(0, 0, 0, 0.3) 0%,
-        rgba(0, 0, 0, 0.08) 34%,
-        rgba(0, 0, 0, 0.22) 58%,
-        rgba(0, 0, 0, 0.65) 100%
-      );
+  .fallback {
+    inset: 14% 10% 38% 10%;
+    width: auto;
   }
 
-  .heroInner {
-    width: calc(100% - 40px);
-
-    padding-top: 94px;
-    padding-bottom: 22px;
+  .title {
+    font-size: clamp(48px, 15vw, 120px);
   }
 
-  .topMeta {
-    grid-template-columns: 1fr auto;
+  .titleIndent {
+    padding-left: 0;
+  }
 
-    font-size: 7px;
+  .top {
+    grid-template-columns: 1fr 1fr;
   }
 
   .topCenter {
     display: none;
   }
 
-  .mainContent {
-    align-items: center;
+  .side {
+    display: none;
   }
 
-  .copy {
-    width: 100%;
-
-    margin-top: 9vh;
+  .caption {
+    font-size: 14px;
   }
 
-  .copy h1 {
-    max-width: 620px;
-
-    font-size: clamp(52px, 15vw, 92px);
-    line-height: 0.84;
+  .progress {
+    gap: 8px;
   }
 
-  .copy p {
-    max-width: 310px;
-
-    margin-top: 24px;
-
-    font-size: 12px;
+  .trackBar {
+    width: 30px;
   }
 
-  .explore {
-    margin-top: 28px;
+  .buttons button {
+    width: 44px;
+    height: 44px;
   }
 
-  .bottomBar {
-    align-items: center;
+  .buttons button:first-child {
+    display: grid;
   }
+}
 
-  .scrollHint {
+@media (max-width: 420px) {
+  .actions .link-line {
     display: none;
   }
 
   .controls {
-    width: 100%;
-
-    justify-content: space-between;
-  }
-
-  .counter {
-    display: none;
-  }
-
-  .progress {
-    flex: 1;
-
-    justify-content: flex-start;
-
-    gap: 7px;
-  }
-
-  .progressNumber {
-    display: none;
-  }
-
-  .progressTrack,
-  .activeProgress .progressTrack {
-    width: 24px;
-  }
-
-  .arrows {
-    margin-left: 10px;
-  }
-
-  .arrows button {
-    width: 34px;
-    height: 34px;
+    gap: 12px;
   }
 }
-
-/* =========================
-   SMALL MOBILE
-========================= */
-
-@media (max-width: 520px) {
-  .heroInner {
-    width: calc(100% - 28px);
-
-    padding-top: 88px;
-    padding-bottom: 18px;
-  }
-
-  .topMeta {
-    font-size: 6.5px;
-  }
-
-  .copy {
-    margin-top: 12vh;
-  }
-
-  .copy h1 {
-    font-size: clamp(48px, 16vw, 78px);
-    letter-spacing: -0.08em;
-  }
-
-  .copy p {
-    max-width: 270px;
-
-    font-size: 11px;
-    line-height: 1.55;
-  }
-
-  .eyebrow {
-    margin-bottom: 18px;
-
-    font-size: 7px;
-  }
-
-  .eyebrow > span {
-    width: 24px;
-  }
-
-  .explore {
-    font-size: 8px;
-  }
-
-  .exploreIcon {
-    width: 28px;
-    height: 28px;
-  }
-
-  .progress {
-    gap: 5px;
-  }
-
-  .progressTrack,
-  .activeProgress .progressTrack {
-    width: 19px;
-  }
-}
-
-/* =========================
-   REDUCED MOTION
-========================= */
 
 @media (prefers-reduced-motion: reduce) {
-  .imageMotion {
-    transform: none !important;
+  .hero {
+    height: 100vh;
+    height: 100svh;
   }
 
-  .scrollHint svg {
-    animation: none;
-  }
-
-  .activeProgress .progressFill {
-    animation: none;
-
-    transform: translateX(0);
+  .outro {
+    display: none;
   }
 }

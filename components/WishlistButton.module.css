@@ -6,10 +6,10 @@
   display: grid;
   place-items: center;
   padding: 0;
-  border: 1px solid rgba(16, 19, 23, 0.16);
+  border: 1px solid rgba(10, 10, 11, 0.16);
   border-radius: 50%;
-  background: rgba(245, 245, 242, 0.82);
-  color: #101317;
+  background: rgba(236, 235, 230, 0.82);
+  color: #0a0a0b;
   cursor: pointer;
   overflow: hidden;
   isolation: isolate;
@@ -21,14 +21,14 @@
 }
 
 .button:hover {
-  background: #101317;
-  border-color: #101317;
-  color: #f5f5f2;
+  background: #0a0a0b;
+  border-color: #0a0a0b;
+  color: #ecebe6;
   transform: translateY(-1px);
 }
 
 .button:focus-visible {
-  outline: 2px solid #101317;
+  outline: 2px solid #0a0a0b;
   outline-offset: 3px;
 }
 
@@ -45,15 +45,15 @@
 }
 
 .saved {
-  background: #101317;
-  border-color: #101317;
-  color: #f5f5f2;
+  background: #0a0a0b;
+  border-color: #0a0a0b;
+  color: #ecebe6;
 }
 
 .saved:hover {
-  background: #101317;
-  border-color: #101317;
-  color: #f5f5f2;
+  background: #0a0a0b;
+  border-color: #0a0a0b;
+  color: #ecebe6;
 }
 
 .ripple {
@@ -64,7 +64,7 @@
   width: 0;
   height: 0;
   border-radius: 50%;
-  background: rgba(245, 245, 242, 0.12);
+  background: rgba(236, 235, 230, 0.12);
   transform: translate(-50%, -50%);
   pointer-events: none;
   transition:

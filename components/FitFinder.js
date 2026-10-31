@@ -199,10 +199,13 @@ export default function FitFinder({ isOpen = true, onClose }) {
   if (!isOpen) return null;
 
   return (
-    <div className={styles.overlay}>
+    <div className={styles.overlay} data-lenis-prevent>
       <motion.div
         ref={dialogRef}
         tabIndex={-1}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Fit finder"
         className={styles.panel}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

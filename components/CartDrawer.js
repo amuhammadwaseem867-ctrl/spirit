@@ -123,6 +123,7 @@ export default function CartDrawer({
       tabIndex={-1}
       className={styles.root}
       role="dialog"
+          data-lenis-prevent
       aria-modal="true"
       aria-label="Shopping bag"
     >

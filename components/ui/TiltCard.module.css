@@ -1,0 +1,39 @@
+.tilt {
+  --rx: 0deg;
+  --ry: 0deg;
+  --gx: 50%;
+  --gy: 50%;
+  perspective: 1400px;
+}
+
+.inner {
+  position: relative;
+  height: 100%;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rx)) rotateY(var(--ry));
+  transition: transform 0.9s var(--ease-out);
+  will-change: transform;
+}
+
+.tilt[data-tilting="true"] .inner {
+  transition: transform 0.18s linear;
+}
+
+.glare {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at var(--gx) var(--gy),
+    rgba(255, 255, 255, 0.22),
+    rgba(255, 255, 255, 0) 55%
+  );
+  mix-blend-mode: soft-light;
+  opacity: 0;
+  transition: opacity 0.6s var(--ease-out);
+}
+
+.tilt[data-tilting="true"] .glare {
+  opacity: 1;
+}
