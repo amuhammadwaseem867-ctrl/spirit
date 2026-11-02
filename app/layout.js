@@ -14,13 +14,18 @@ import GLRoot from "@/components/three/GLRoot";
 
 /*
  * Satoshi (Indian Type Foundry, via Fontshare, ITF Free Font
- * License) sets headlines and body copy from one self-hosted
- * variable file. Geist Mono sets the small technical labels.
+ * License) sets headlines and body copy. The static Regular and
+ * Medium files are used instead of the variable font: their glyph
+ * contours are merged, so outlined headlines (text-stroke) draw
+ * clean letters without overlap lines. Geist Mono sets the small
+ * technical labels.
  */
 const satoshi = localFont({
-  src: "./fonts/Satoshi-Variable.woff2",
+  src: [
+    { path: "./fonts/Satoshi-Regular.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/Satoshi-Medium.woff2", weight: "500", style: "normal" },
+  ],
   variable: "--font-satoshi",
-  weight: "300 900",
   display: "swap",
 });
 
