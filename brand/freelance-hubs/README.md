@@ -23,4 +23,23 @@ Typeface: Inter / Inter Display
 
 `freelance-hubs-contact-sheet.png` shows all concepts on one page for review.
 
-Regenerate: `node brand/freelance-hubs/generate.cjs && python3 brand/freelance-hubs/set-dpi.py`
+## Client presentation
+
+`FREELANCE-HUBS-Logo-Concepts.pdf` has 7 pages, each 2000 × 943. It follows the reference deck's board layout:
+
+- **Pages 1–6:** one board per concept, in three panels:
+  - the mark in white on a textured navy background
+  - the horizontal and one-line lockups on light grey
+  - mockups: a button badge, a woven label, and front and back business cards
+- **Page 7:** an overview of every mark and lockup.
+
+The individual boards are in `presentation/` at 4000 × 1886.
+
+## Regenerate
+
+```
+node brand/freelance-hubs/generate.cjs && python3 brand/freelance-hubs/set-dpi.py      # delivery PNGs
+node brand/freelance-hubs/presentation.cjs && python3 brand/freelance-hubs/make-pdf.py # presentation
+```
+
+The marks, wordmarks and lockups live in `concepts.cjs` and are shared by both scripts.
