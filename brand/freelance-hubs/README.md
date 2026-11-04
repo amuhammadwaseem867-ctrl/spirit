@@ -9,14 +9,16 @@ Six logo concepts in blue and white. Each one comes in two PNG lockups:
 
 | # | Concept | Idea |
 |---|---|---|
-| 01 | Hub Network | A central hub linked to six freelancer nodes |
-| 02 | FH Monogram | F and H joined by a shared crossbar, in an app-style tile |
-| 03 | Talent Pin | A map pin holding a person: find talent anywhere |
-| 04 | Honeycomb Hub | Seven hexagon cells built around one core |
-| 05 | Community Circle | A team of three inside a ring, with tagline "Connect · Create · Deliver" |
-| 06 | Digital Workspace | A laptop with a network on screen, white on a blue gradient |
+| 01 | Hub H | The H's crossbar is a hub node joining two stems. Name and idea in one mark. |
+| 02 | Forward F | The F's middle arm becomes an arrow breaking out of the circle: freelancers moving forward. |
+| 03 | The Link | Client and freelancer as two interlaced rings, a partnership. |
+| 04 | Core Cube | An isometric cube whose three faces meet at one hub point: the place where all sides of the work meet. |
+| 05 | Take Flight | A faceted paper plane: freedom to work from anywhere. |
+| 06 | Talk Network | A speech bubble holding a connected team, white on a blue gradient. |
 
-Palette: Navy `#0A2A5E` · Blue `#1565D8` · Sky `#4DA3FF` · Ice `#DCEBFF` · White `#FFFFFF`
+Each mark is built on a 200-unit grid with matched stroke weights. It stays readable at favicon size. Renders are supersampled 3x and then downscaled for clean edges.
+
+Palette: Navy `#0B2559` · Blue `#1662E0` · Bright `#2F86FF` · Sky `#7DB8FF` · White `#FFFFFF`
 Typeface: Inter / Inter Display
 
 `freelance-hubs-contact-sheet.png` shows all concepts on one page for review.

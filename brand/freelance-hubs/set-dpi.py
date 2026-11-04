@@ -9,8 +9,10 @@ here = os.path.dirname(os.path.abspath(__file__))
 pngs = sorted(glob.glob(os.path.join(here, "png", "*.png")))
 
 for f in pngs:
-    dpi = 300 if "300dpi" in f else 72
+    dpi, size = ((300, (768, 450)) if "300dpi" in f else (72, (770, 684)))
     im = Image.open(f).convert("RGB")
+    if im.size != size:  # downsample the 3x supersampled render
+        im = im.resize(size, Image.LANCZOS)
     im.save(f, dpi=(dpi, dpi), optimize=True)
     print(f"{os.path.basename(f)}: {im.size[0]}x{im.size[1]} px @ {dpi} DPI "
           f"= {im.size[0]/dpi:.2f} x {im.size[1]/dpi:.2f} in")
