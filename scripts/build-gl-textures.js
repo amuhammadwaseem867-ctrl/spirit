@@ -1,5 +1,5 @@
 /**
- * SPIRIT — WebGL texture builder.
+ * SPIRIT, WebGL texture builder.
  *
  * The campaign originals are 2–8 MB each, far too heavy to upload
  * to the GPU. This script crops the hero frames to the 3:4 panel

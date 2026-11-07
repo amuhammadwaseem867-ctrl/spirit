@@ -2,7 +2,7 @@
   padding-block: clamp(80px, 9vw, 150px) clamp(90px, 10vw, 170px);
 }
 
-/* ---------- header ---------- */
+/* header */
 
 .header {
   display: grid;
@@ -31,7 +31,7 @@
   color: var(--fg-dark-muted);
 }
 
-/* ---------- featured ---------- */
+/* featured */
 
 .featured {
   display: grid;
@@ -193,7 +193,7 @@
   font-size: 11px;
 }
 
-/* ---------- rail ---------- */
+/* rail */
 
 .rail {
   display: grid;

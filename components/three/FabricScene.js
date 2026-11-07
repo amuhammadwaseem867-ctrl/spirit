@@ -11,7 +11,7 @@ import { NOISE } from "./shaders";
 import { createRandom, damp } from "./monogram";
 
 /*
- * PERFORMANCE LAB — an interactive swatch of SPIRIT fabric.
+ * PERFORMANCE LAB, an interactive swatch of SPIRIT fabric.
  *
  * Three modes, blended continuously:
  *   0 LIGHTNESS      the swatch floats and drapes on slow air
@@ -42,7 +42,7 @@ const fabricVertex = /* glsl */ `
 
     /* drape: slow folds, stronger in LIGHTNESS */
     float t = uTime * (0.35 + uLight * 0.25);
-    /* broad, smooth folds — low-frequency waves plus one soft noise octave */
+    /* broad, smooth folds, low-frequency waves plus one soft noise octave */
     float folds =
       sin(p.x * 1.3 + t * 1.2) * 0.1 +
       sin(p.y * 1.7 - t * 0.8 + p.x * 0.6) * 0.08 +

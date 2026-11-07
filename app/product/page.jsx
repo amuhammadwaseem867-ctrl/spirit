@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
 /**
- * /product is a landing point — the real product
+ * /product is a landing point, the real product
  * experiences live at /product/[slug]. Send visitors
  * to the CORE PERFORMANCE piece by default.
  */

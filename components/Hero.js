@@ -48,7 +48,7 @@ export default function Hero() {
   const frame = heroFrames[index];
   const total = heroFrames.length;
 
-  /* ---------- intro (waits for the preloader) ---------- */
+  /* intro (waits for the preloader) */
   useEffect(() => {
     return onIntroDone(() => {
       sceneState.hero.intro = 1;
@@ -56,7 +56,7 @@ export default function Hero() {
     });
   }, []);
 
-  /* ---------- share the stage with the 3D scene ---------- */
+  /* share the stage with the 3D scene */
   useEffect(() => {
     sceneState.hero.el = stageRef.current;
     sceneState.hero.index = 0;
@@ -72,7 +72,7 @@ export default function Hero() {
     sceneState.hero.index = index;
   }, [index]);
 
-  /* ---------- visibility: pause work when offscreen ---------- */
+  /* visibility: pause work when offscreen */
   useEffect(() => {
     const node = sectionRef.current;
     if (!node) return undefined;
@@ -93,7 +93,7 @@ export default function Hero() {
     };
   }, []);
 
-  /* ---------- autoplay (never under reduced motion) ---------- */
+  /* autoplay (never under reduced motion) */
   const autoplay = playing && intro && inView && !scrolled && !reduce;
 
   useEffect(() => {
@@ -118,7 +118,7 @@ export default function Hero() {
     if (event.key === "ArrowLeft") go(index - 1);
   };
 
-  /* ---------- scroll choreography ---------- */
+  /* scroll choreography */
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end end"],
@@ -174,7 +174,7 @@ export default function Hero() {
           }
         />
 
-        {/* --------- copy --------- */}
+        {/* copy */}
         <div className={`${styles.inner} wrap`}>
           <motion.div className={styles.top} style={reduce ? undefined : { opacity: fade }}>
             <span className={styles.topIndex}>
@@ -310,7 +310,7 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* --------- revealed as the panel fills the screen --------- */}
+        {/* revealed as the panel fills the screen */}
         <motion.div
           className={styles.outro}
           style={{ opacity: late, y: lateY }}

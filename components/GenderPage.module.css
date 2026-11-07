@@ -2,7 +2,7 @@
   width: 100%;
 }
 
-/* ---------- featured ---------- */
+/* featured */
 
 .featured {
   padding-block: clamp(80px, 9vw, 150px);
@@ -37,7 +37,7 @@
   color: var(--fg-dark-muted);
 }
 
-/* ---------- products ---------- */
+/* products */
 
 .products {
   padding-block: clamp(80px, 9vw, 150px);
@@ -75,7 +75,7 @@
   color: var(--fg-light-muted);
 }
 
-/* ---------- principles ---------- */
+/* principles */
 
 .principles {
   padding-block: clamp(80px, 9vw, 150px);

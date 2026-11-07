@@ -30,7 +30,7 @@
   line-height: 1.5;
 }
 
-/* ---------- flip cards ---------- */
+/* flip cards */
 
 .principles {
   display: grid;
@@ -112,7 +112,7 @@
   line-height: 1.45;
 }
 
-/* ---------- movement system ---------- */
+/* movement system */
 
 .system {
   display: grid;
@@ -203,7 +203,7 @@
   transform: scaleX(var(--level));
 }
 
-/* ---------- closing ---------- */
+/* closing */
 
 .closing {
   padding-block: clamp(70px, 8vw, 130px);

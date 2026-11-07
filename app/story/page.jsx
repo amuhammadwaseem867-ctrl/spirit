@@ -80,7 +80,7 @@ export default function StoryPage() {
         imageAlt="Athlete striding past concrete and glass"
       />
 
-      {/* ---------- featured ---------- */}
+      {/* featured */}
       <section className={`${styles.featured} surface-ink`}>
         <div className="wrap">
           <div className="meta">
@@ -114,7 +114,7 @@ export default function StoryPage() {
         </div>
       </section>
 
-      {/* ---------- chapters ---------- */}
+      {/* chapters */}
       <section className={`${styles.chapters} surface-bone`}>
         <div className="wrap">
           <div className="meta">
@@ -170,7 +170,7 @@ export default function StoryPage() {
         </div>
       </section>
 
-      {/* ---------- manifesto ---------- */}
+      {/* manifesto */}
       <section className={`${styles.manifesto} surface-ink`}>
         <div className="wrap">
           <div className="meta">

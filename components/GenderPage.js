@@ -36,7 +36,7 @@ export default function GenderPage({ config }) {
         imageAlt={config.heroAlt}
       />
 
-      {/* ---------- featured ---------- */}
+      {/* featured */}
       <section className={`${styles.featured} surface-ink`}>
         <div className="wrap">
           <div className="meta">
@@ -75,7 +75,7 @@ export default function GenderPage({ config }) {
         </div>
       </section>
 
-      {/* ---------- products ---------- */}
+      {/* products */}
       <section id="products" className={`${styles.products} surface-bone`}>
         <div className="wrap">
           <div className="meta">
@@ -119,7 +119,7 @@ export default function GenderPage({ config }) {
         </div>
       </section>
 
-      {/* ---------- principles ---------- */}
+      {/* principles */}
       <section className={`${styles.principles} surface-ink`}>
         <div className="wrap">
           <div className="meta">

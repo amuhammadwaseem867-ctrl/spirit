@@ -2,7 +2,7 @@
   width: 100%;
 }
 
-/* ---------- destinations ---------- */
+/* destinations */
 
 .destinations {
   padding-block: clamp(70px, 8vw, 130px);
@@ -88,7 +88,7 @@
   }
 }
 
-/* ---------- products ---------- */
+/* products */
 
 .products {
   padding-block: clamp(80px, 9vw, 150px);

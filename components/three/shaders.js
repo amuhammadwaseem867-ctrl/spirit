@@ -1,5 +1,5 @@
 /*
- * SPIRIT — GLSL shared by the 3D scenes.
+ * SPIRIT, GLSL shared by the 3D scenes.
  *
  * Textures are sampled as raw sRGB and written straight out (no
  * colour-space include), so photographs keep their exact grade.
@@ -36,13 +36,11 @@ export const NOISE = /* glsl */ `
   }
 `;
 
-/* -------------------------------------------------------------
-   HERO PANEL
+/* Hero panel
    - liquid diagonal wipe between two frames
    - directional motion blur + chromatic fringe that follows the
-     pointer's velocity ("active motion")
-   - a travelling fold in the geometry during each transition
-------------------------------------------------------------- */
+   pointer's velocity ("active motion")
+   - a travelling fold in the geometry during each transition */
 
 export const panelVertex = /* glsl */ `
   uniform float uTime;
@@ -171,9 +169,7 @@ export const panelFragment = /* glsl */ `
   }
 `;
 
-/* -------------------------------------------------------------
-   DUST — drifting particles caught in the light shaft
-------------------------------------------------------------- */
+/* DUST, drifting particles caught in the light shaft */
 
 export const dustVertex = /* glsl */ `
   uniform float uTime;
@@ -209,9 +205,7 @@ export const dustFragment = /* glsl */ `
   }
 `;
 
-/* -------------------------------------------------------------
-   LIGHT SHAFT — a soft diagonal beam behind everything
-------------------------------------------------------------- */
+/* LIGHT SHAFT, a soft diagonal beam behind everything */
 
 export const beamVertex = /* glsl */ `
   varying vec2 vUv;
