@@ -26,7 +26,7 @@
   color: var(--bone);
 }
 
-/* ---------- 3D words ---------- */
+/* 3D words */
 
 .words {
   position: relative;
@@ -54,7 +54,7 @@
   -webkit-text-stroke: max(1px, 0.008em) var(--bone);
 }
 
-/* ---------- bottom ---------- */
+/* bottom */
 
 .bottom {
   display: grid;

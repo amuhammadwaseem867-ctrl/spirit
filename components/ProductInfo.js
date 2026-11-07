@@ -135,7 +135,7 @@ export default function ProductInfo({
           <span>SELECT SIZE</span>
 
           {/*
-           * Static label only — SPIRIT does not publish garment
+           * Static label only, SPIRIT does not publish garment
            * measurements yet, so this is deliberately not an
            * interactive control.
            */}

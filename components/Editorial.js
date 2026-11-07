@@ -37,7 +37,7 @@ const stories = [
 
 /*
  * The frame starts tipped back (rotateX) and scaled down, then
- * stands up flat as it reaches the middle of the viewport — like a
+ * stands up flat as it reaches the middle of the viewport, like a
  * print being lifted off a table toward the reader.
  */
 function RiseFrame({ story, featured = false, sizes }) {

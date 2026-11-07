@@ -1,6 +1,4 @@
-/* =========================================================
-   COLLECTIONS — pinned 3D arc carousel
-========================================================= */
+/* COLLECTIONS, pinned 3D arc carousel */
 
 .collections {
   position: relative;
@@ -99,7 +97,7 @@
   transform-origin: left;
 }
 
-/* ---------- arc ---------- */
+/* arc */
 
 .arc {
   --radius: 1500px;
@@ -221,10 +219,8 @@
   }
 }
 
-/* =========================================================
-   SMALL SCREENS / REDUCED MOTION
-   The arc becomes a native horizontal scroller.
-========================================================= */
+/* Small screens / reduced motion
+   The arc becomes a native horizontal scroller. */
 
 @media (max-width: 900px), (prefers-reduced-motion: reduce) {
   .collections {

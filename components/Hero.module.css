@@ -1,8 +1,6 @@
-/* =========================================================
-   HERO — pinned 3D stage
+/* HERO, pinned 3D stage
    The section is taller than the viewport; the stage sticks
-   while the scroll progress drives the camera move.
-========================================================= */
+   while the scroll progress drives the camera move. */
 
 .hero {
   position: relative;
@@ -45,7 +43,7 @@
   padding-bottom: clamp(20px, 3.4vh, 40px);
 }
 
-/* ---------- top line ---------- */
+/* top line */
 
 .top {
   display: grid;
@@ -72,7 +70,7 @@
   text-align: right;
 }
 
-/* ---------- headline ---------- */
+/* headline */
 
 .headline {
   align-self: end;
@@ -92,7 +90,7 @@
   padding-left: 0.62em;
 }
 
-/* ---------- bottom row ---------- */
+/* bottom row */
 
 .bottom {
   display: grid;
@@ -131,7 +129,7 @@
   gap: 28px;
 }
 
-/* ---------- slide controls ---------- */
+/* slide controls */
 
 .controls {
   display: flex;
@@ -225,7 +223,7 @@
   }
 }
 
-/* ---------- scroll cue + side label ---------- */
+/* scroll cue + side label */
 
 .scrollCue {
   position: absolute;
@@ -271,7 +269,7 @@
   background: var(--line-dark-strong);
 }
 
-/* ---------- outro ---------- */
+/* outro */
 
 .outro {
   position: absolute;
@@ -291,7 +289,7 @@
   line-height: 0.8;
 }
 
-/* ---------- intro states ---------- */
+/* intro states */
 
 .hero[data-intro="false"] .top > *,
 .hero[data-intro="false"] .bottom > * {
@@ -305,9 +303,7 @@
   transition: opacity 1.2s var(--ease-out) 0.5s;
 }
 
-/* =========================================================
-   RESPONSIVE
-========================================================= */
+/* Responsive */
 
 @media (max-width: 1100px) {
   .bottom {

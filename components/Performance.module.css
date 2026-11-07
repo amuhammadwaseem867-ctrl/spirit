@@ -33,7 +33,7 @@
   color: var(--fg-dark-muted);
 }
 
-/* ---------- lab ---------- */
+/* lab */
 
 .lab {
   display: grid;
@@ -161,7 +161,7 @@
   line-height: 1;
 }
 
-/* ---------- swatch ---------- */
+/* swatch */
 
 .swatch {
   position: relative;
@@ -217,7 +217,7 @@
   width: 1px;
 }
 
-/* ---------- statement ---------- */
+/* statement */
 
 .statement {
   display: grid;

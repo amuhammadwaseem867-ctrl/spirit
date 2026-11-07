@@ -221,7 +221,7 @@ export default function Navbar() {
         </AnimatePresence>
       </header>
 
-      {/* ---------- mobile menu ---------- */}
+      {/* mobile menu */}
       <div
         id="mobile-menu"
         className={styles.mobile}

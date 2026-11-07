@@ -4,7 +4,7 @@
   overflow: hidden;
 }
 
-/* ---------- newsletter ---------- */
+/* newsletter */
 
 .top {
   display: grid;
@@ -110,7 +110,7 @@
   color: var(--fg-dark-faint);
 }
 
-/* ---------- link columns ---------- */
+/* link columns */
 
 .columns {
   display: grid;
@@ -175,7 +175,7 @@
   }
 }
 
-/* ---------- giant wordmark ---------- */
+/* giant wordmark */
 
 .word {
   padding-inline: var(--gutter);
@@ -194,7 +194,7 @@
   color: var(--bone);
 }
 
-/* ---------- bottom bar ---------- */
+/* bottom bar */
 
 .bottom {
   display: grid;

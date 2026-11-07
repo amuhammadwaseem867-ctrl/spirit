@@ -2,7 +2,7 @@
   width: 100%;
 }
 
-/* ---------- detail ---------- */
+/* detail */
 
 .detail {
   padding-top: calc(var(--nav-h) + clamp(20px, 3vw, 40px));
@@ -63,7 +63,7 @@
   margin-bottom: 8px;
 }
 
-/* ---------- related ---------- */
+/* related */
 
 .related {
   padding-block: clamp(80px, 9vw, 150px);

@@ -256,11 +256,11 @@ export default function HeroScene({ frames, onReady }) {
 
     if (!hero.visible || !u) return;
 
-    /* ---------- intro ---------- */
+    /* intro */
     m.intro = m.reduce ? 1 : damp(m.intro, hero.intro, 2.2, dt);
     const intro = easeOutExpo(clamp01(m.intro));
 
-    /* ---------- slide transitions ---------- */
+    /* slide transitions */
     if (!m.transitioning && hero.index !== m.current) {
       m.target = hero.index;
       u.uTexB.value = textures[m.target];
@@ -285,7 +285,7 @@ export default function HeroScene({ frames, onReady }) {
 
     u.uProgress.value = m.transitioning ? easeInOutCubic(m.progress) : 0;
 
-    /* ---------- scroll choreography ---------- */
+    /* scroll choreography */
     const scroll = m.reduce ? 0 : hero.scroll;
     const s = easeInOutCubic(clamp01(scroll / 0.72));
     const full = visibleSize(CAMERA_Z - 0.4, aspect);
@@ -295,7 +295,7 @@ export default function HeroScene({ frames, onReady }) {
     const px = THREE.MathUtils.lerp(layout.panel.x, 0, s);
     const py = THREE.MathUtils.lerp(layout.panel.y, 0, s);
 
-    /* ---------- pointer → panel uv + velocity ---------- */
+    /* pointer → panel uv + velocity */
     const rect = hero.el?.getBoundingClientRect();
     let ndcX = 0;
     let ndcY = 0;
@@ -333,7 +333,7 @@ export default function HeroScene({ frames, onReady }) {
     u.uFold.value = 1 - s;
     u.uDim.value = THREE.MathUtils.lerp(layout.dim, 0.62, s) + clamp01((scroll - 0.72) / 0.28) * 0.3;
 
-    /* ---------- panel transform ---------- */
+    /* panel transform */
     m.tiltY = damp(m.tiltY, m.reduce ? 0 : ndcX * 0.14 * (1 - s), 3, dt);
     m.tiltX = damp(m.tiltX, m.reduce ? 0 : -ndcY * 0.09 * (1 - s), 3, dt);
 
@@ -354,7 +354,7 @@ export default function HeroScene({ frames, onReady }) {
       frame.current.material.opacity = 0.35 * intro * (1 - s);
     }
 
-    /* ---------- monogram ---------- */
+    /* monogram */
     if (mark.current) {
       const g = mark.current;
       /* flies past the camera before the outro word appears */

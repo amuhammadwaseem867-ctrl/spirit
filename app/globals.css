@@ -1,11 +1,9 @@
 @import "tailwindcss";
 
-/* =========================================================
-   SPIRIT — CONCRETE & CHROME
+/* Spirit, concrete & chrome
    Dark-first system. Ink surfaces carry the 3D scenes; bone
    surfaces give the editorial sections air. A single signal
-   orange marks live state and focus — nothing decorative.
-========================================================= */
+   orange marks live state and focus, nothing decorative. */
 
 :root {
   --ink: #0a0a0b;
@@ -54,9 +52,7 @@
   --content-width: var(--max);
 }
 
-/* =========================================================
-   RESET
-========================================================= */
+/* Reset */
 
 *,
 *::before,
@@ -160,9 +156,7 @@ select {
   color: var(--ink);
 }
 
-/* =========================================================
-   ACCESSIBILITY
-========================================================= */
+/* Accessibility */
 
 :focus-visible {
   outline: 2px solid var(--signal);
@@ -200,9 +194,7 @@ select {
   transform: none;
 }
 
-/* =========================================================
-   SMOOTH SCROLL (LENIS)
-========================================================= */
+/* Smooth scroll (Lenis) */
 
 html.lenis,
 html.lenis body {
@@ -221,9 +213,7 @@ html.lenis body {
   pointer-events: none;
 }
 
-/* =========================================================
-   CUSTOM CURSOR
-========================================================= */
+/* Custom cursor */
 
 html.has-cursor,
 html.has-cursor body,
@@ -240,9 +230,7 @@ html.has-cursor textarea {
   cursor: text;
 }
 
-/* =========================================================
-   SCROLLBAR
-========================================================= */
+/* Scrollbar */
 
 html {
   scrollbar-width: thin;
@@ -261,11 +249,9 @@ html {
   background: rgba(236, 235, 230, 0.24);
 }
 
-/* =========================================================
-   FILM GRAIN
+/* Film grain
    A fixed noise layer gives every surface the same photographic
-   texture. It sits above content but never takes pointer input.
-========================================================= */
+   texture. It sits above content but never takes pointer input. */
 
 body::after {
   content: "";
@@ -287,12 +273,10 @@ body::after {
   100% { transform: translate(0, 0); }
 }
 
-/* =========================================================
-   LAYERS
+/* Layers
    The WebGL canvas is fixed at z-index 0. Page content sits
    above it; sections that host a 3D view keep a transparent
-   background so the scene shows through.
-========================================================= */
+   background so the scene shows through. */
 
 .site {
   position: relative;
@@ -340,9 +324,7 @@ section {
   color: var(--bone);
 }
 
-/* =========================================================
-   LAYOUT
-========================================================= */
+/* Layout */
 
 .wrap {
   width: 100%;
@@ -351,9 +333,7 @@ section {
   padding-inline: var(--gutter);
 }
 
-/* =========================================================
-   TYPOGRAPHY SCALE
-========================================================= */
+/* Typography scale */
 
 /*
  * Satoshi at a medium weight and natural width: large, calm
@@ -471,9 +451,7 @@ section {
   100% { box-shadow: 0 0 0 0 rgba(255, 91, 46, 0); }
 }
 
-/* =========================================================
-   BUTTONS
-========================================================= */
+/* Buttons */
 
 .btn {
   position: relative;
@@ -607,11 +585,9 @@ section {
   }
 }
 
-/* =========================================================
-   REVEAL
+/* Reveal
    Minor elements fade up 12px (UI/UX Pro Max "Scroll Reveal /
-   Subtle"). Toggled by the [data-in] attribute.
-========================================================= */
+   Subtle"). Toggled by the [data-in] attribute. */
 
 .reveal {
   opacity: 0;
@@ -627,9 +603,7 @@ section {
   transform: none;
 }
 
-/* =========================================================
-   MOBILE
-========================================================= */
+/* Mobile */
 
 @media (max-width: 760px) {
   :root {
@@ -650,9 +624,7 @@ section {
   }
 }
 
-/* =========================================================
-   REDUCED MOTION
-========================================================= */
+/* Reduced motion */
 
 @media (prefers-reduced-motion: reduce) {
   *,

@@ -1,4 +1,4 @@
-/* ---------- featured ---------- */
+/* featured */
 
 .featured {
   padding-block: clamp(80px, 9vw, 150px);
@@ -33,7 +33,7 @@
   color: var(--fg-dark-muted);
 }
 
-/* ---------- chapters ---------- */
+/* chapters */
 
 .chapters {
   padding-block: clamp(80px, 9vw, 150px);
@@ -145,7 +145,7 @@
   color: var(--fg-light-muted);
 }
 
-/* ---------- manifesto ---------- */
+/* manifesto */
 
 .manifesto {
   padding-block: clamp(80px, 9vw, 150px);

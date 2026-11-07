@@ -154,7 +154,7 @@ export default function ShopPage() {
         </button>
       </PageHero>
 
-      {/* ---------- destinations ---------- */}
+      {/* destinations */}
       <section className={`${styles.destinations} surface-ink`}>
         <div className="wrap">
           <div className="meta">
@@ -182,7 +182,7 @@ export default function ShopPage() {
         </div>
       </section>
 
-      {/* ---------- product system ---------- */}
+      {/* product system */}
       <section id="products" className={`${styles.products} surface-bone`}>
         <div className="wrap">
           <div className="meta">

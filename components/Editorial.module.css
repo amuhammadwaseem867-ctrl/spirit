@@ -23,7 +23,7 @@
   color: var(--fg-dark-muted);
 }
 
-/* ---------- rising frames ---------- */
+/* rising frames */
 
 .riseWrap {
   perspective: 1600px;
@@ -121,7 +121,7 @@
   }
 }
 
-/* ---------- intro ---------- */
+/* intro */
 
 .intro {
   display: grid;
@@ -144,7 +144,7 @@
   letter-spacing: -0.03em;
 }
 
-/* ---------- grid ---------- */
+/* grid */
 
 .grid {
   display: grid;

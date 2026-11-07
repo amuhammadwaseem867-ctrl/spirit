@@ -23,7 +23,7 @@
   color: var(--fg-light-muted);
 }
 
-/* ---------- list ---------- */
+/* list */
 
 .list {
   margin: 0;
@@ -114,7 +114,7 @@
   color: var(--fg-light-muted);
 }
 
-/* ---------- floating preview ---------- */
+/* floating preview */
 
 .preview {
   position: fixed;

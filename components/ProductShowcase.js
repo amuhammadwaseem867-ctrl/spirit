@@ -45,7 +45,7 @@ export default function ProductShowcase() {
           </div>
         </Reveal>
 
-        {/* ---------- featured ---------- */}
+        {/* featured */}
         <div className={styles.featured}>
           <TiltCard className={styles.featuredCard} max={5}>
             <Link
@@ -117,7 +117,7 @@ export default function ProductShowcase() {
           </Reveal>
         </div>
 
-        {/* ---------- rail ---------- */}
+        {/* rail */}
         <Reveal className={styles.rail} threshold={0.1}>
           {rail.map((product, index) => (
             <article
